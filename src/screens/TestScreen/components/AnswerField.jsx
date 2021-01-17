@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import "../style.css";
+
 function AnswerField(props) {
   const svgRef = useRef();
   //states
@@ -8,21 +9,54 @@ function AnswerField(props) {
     point1: null,
     point2: null,
   });
+  const [action, setAction] = useState("add");
+
   //useEffect
   useEffect(() => {
-    console.log(lines);
-  }, [lines]);
+    console.log(currentLine);
+
+    if (currentLine.point1 && currentLine.point2) {
+      const reversedLine = {
+        point1: currentLine.point2,
+        point2: currentLine.point1,
+      };
+      if (
+        !lines
+          .map((line) => JSON.stringify(line))
+          .includes(JSON.stringify(currentLine)) &&
+        !lines
+          .map((line) => JSON.stringify(line))
+          .includes(JSON.stringify(reversedLine))
+      ) {
+        setLines((prev) => {
+          console.log("testtt");
+          return [...prev, currentLine];
+        });
+      }
+
+      setCurrentLine({ point1: null, point2: null });
+    }
+  }, [currentLine]);
 
   useEffect(() => {
-    console.log(currentLine);
-    if (currentLine.point1 && currentLine.point2) {
+    svgRef.current.classList.toggle("delete-cursor");
+    svgRef.current.classList.toggle("add-cursor");
+  }, [action]);
+
+  // handlers
+  const handleLineClick = (event) => {
+    if (action === "delete") {
+      console.log(event.target.dataset);
+      const index = event.target.dataset.index;
       setLines((prev) => {
-        console.log("testtt");
-        return [...prev, currentLine];
+        prev[index] = "deleted";
+        return prev.filter((line) => line !== "deleted");
       });
     }
-  }, [currentLine, setLines]);
-
+  };
+  const handleAction = (event) => {
+    setAction(event.target.name);
+  };
   const handleCircleClick = (event) => {
     const point = {
       x: event.target.getAttribute("cx"),
@@ -32,9 +66,11 @@ function AnswerField(props) {
       setCurrentLine({ point1: point, point2: null });
       return;
     }
-    setCurrentLine((prev) => {
-      return { ...prev, point2: point };
-    });
+    if (JSON.stringify(currentLine.point1) !== JSON.stringify(point)) {
+      setCurrentLine((prev) => {
+        return { ...prev, point2: point };
+      });
+    }
 
     console.log(point);
   };
@@ -44,8 +80,24 @@ function AnswerField(props) {
   };
   return (
     <div>
-      <svg ref={svgRef} className="question-branch-paper">
+      <svg ref={svgRef} className="question-branch-paper delete-cursor">
         <g transform="rotate(70,150,150)">
+          {lines.map((l, index) => {
+            console.log(l);
+            return (
+              <line
+                key={index}
+                x1={l.point1.x}
+                y1={l.point1.y}
+                x2={l.point2.x}
+                y2={l.point2.y}
+                strokeWidth="3"
+                stroke="green"
+                data-index={index}
+                onClick={handleLineClick}
+              />
+            );
+          })}
           {props.points.map((point, index) => {
             return (
               <circle
@@ -58,20 +110,6 @@ function AnswerField(props) {
               />
             );
           })}
-          {lines.map((l, index) => {
-            console.log(l);
-            return (
-              <line
-                key={index}
-                x1={l.point1.x}
-                y1={l.point1.y}
-                x2={l.point2.x}
-                y2={l.point2.y}
-                strokeWidth="1"
-                stroke="green"
-              />
-            );
-          })}
         </g>
       </svg>
       <div className="tools">
@@ -79,8 +117,13 @@ function AnswerField(props) {
           left Rotate
         </button>
         <button className="tool-btn">right Rotate</button>
-        <button className="tool-btn"> erase</button>
-        <button className="tool-btn">line</button>
+        <button className="tool-btn" name="delete" onClick={handleAction}>
+          {" "}
+          erase
+        </button>
+        <button className="tool-btn" name="add" onClick={handleAction}>
+          line
+        </button>
       </div>
     </div>
   );

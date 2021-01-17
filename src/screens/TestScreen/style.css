@@ -5,3 +5,11 @@
   margin-top: 20px;
   margin-left: 20px;
 }
+
+.add-cursor {
+  cursor: pointer;
+}
+
+.delete-cursor {
+  cursor: url("/src/img-icons/Eraser-icon.png"), auto;
+}
