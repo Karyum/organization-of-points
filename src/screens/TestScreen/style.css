@@ -11,5 +11,9 @@
 }
 
 .delete-cursor {
-  cursor: url("/src/img-icons/Eraser-icon.png"), auto;
+  cursor: url("/src/img-icons/Eraser-icon.png") -16 16, auto;
+}
+
+.graph-line {
+  padding: 5px;
 }
