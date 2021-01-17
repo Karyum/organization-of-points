@@ -1,0 +1,13 @@
+.circle-container {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: lightgray;
+}
+
+.draggable {
+  cursor: move;
+}
+.erasable {
+  cursor: url("/src/img-icons/Eraser-icon.png") 50 50, auto;
+}

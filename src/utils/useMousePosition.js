@@ -12,5 +12,9 @@ export const useMousePosition = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(`(${position.x}, ${position.y})`);
+  }, [position]);
+
   return position;
 };

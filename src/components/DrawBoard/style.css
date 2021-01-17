@@ -1,0 +1,6 @@
+.draw-board {
+  width: 304px;
+  height: 304px;
+  border: 2px solid black;
+  box-sizing: border-box;
+}
