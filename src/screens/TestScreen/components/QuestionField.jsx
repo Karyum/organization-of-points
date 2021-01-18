@@ -9,10 +9,12 @@ function QuestionField() {
             <svg className="shapes"></svg>
             <svg className="shapes"></svg>
           </div>
-          <div className="timer"></div>
+          {/* <div className="timer"></div> */}
         </div>
         <div className="answer-section">
-        <svg className="shapes"></svg>
+          <button className="navigation">prev</button>
+          <svg className="shapes solution"></svg>
+          <button className="navigation">next</button>
         </div>
       </div>
       <div className="question-branches"></div>

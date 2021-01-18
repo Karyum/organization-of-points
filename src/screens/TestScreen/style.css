@@ -1,3 +1,7 @@
+:root {
+  --shape-size: 240;
+}
+
 .question-branch-paper {
   width: 400px;
   height: 400px;
@@ -30,7 +34,7 @@
 .question-section {
   display: flex;
   width: 78%;
-  height: 100%;
+  /* height: 100%; */
   background: #f1f7ff;
   border-radius: 10px;
   border: 1px solid #bc6c25;
@@ -49,8 +53,11 @@
   margin-top: 20px;
 }
 .shapes {
-  width: 240px;
-  height: 240px;
+  width: calc(1px * var(--shape-size));
+  height: calc(1px * var(--shape-size));
+  border: 1px solid black;
+  background-color: white;
+  box-sizing: border-box;
 }
 .timer {
   width: 100px;
@@ -61,7 +68,8 @@
 .question {
   width: 75%;
   display: flex;
-  background-color: white;
+  /* background-color: white; */
+  justify-content: center;
 }
 .question-timer {
   display: flex;
@@ -73,6 +81,13 @@
 .answer-section {
   display: flex;
   background-color: white;
-  width: 100%;
+  width: 75%;
+  margin: 12px auto;
+  justify-content: center;
+  align-items: center;
   margin-top: 12px;
+  height: calc(1px * calc(1.45 * var(--shape-size)));
+}
+.solution {
+  margin: 0 calc(1px * calc(0.25 * var(--shape-size)));
 }
