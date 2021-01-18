@@ -4,3 +4,7 @@
   border: 2px solid black;
   box-sizing: border-box;
 }
+
+.actions {
+  margin-top: 20px;
+}

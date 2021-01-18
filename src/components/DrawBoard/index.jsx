@@ -6,17 +6,19 @@ function distance(p1, p2) {
     return Math.sqrt(Math.pow((p1.x - p2.x), 2) + Math.pow((p1.y - p2.y), 2))
 }
 
-const scaleLine = 'scale line';
-const deleteLine = 'delete line';
-const submitGraph = 'submit graph'
+const addLine = 'add';
+const adjustLine = 'adjust';
+const deleteLine = 'delete';
+const submitGraph = 'submit'
+const minTwoPointsDistance = 20;
 
 
 export default function DrawBoard(props) {
     const boardRef = useRef()
     const [boardSize, setBoardSize] = useState(0);
-    const [action,setAction] = useState(scaleLine)
+    const [action,setAction] = useState(adjustLine)
     const [selectedPoint,setSelectedPoint] = useState(null);
-    const [linePoints, setLinePoints] = useState([
+    const [lines, setlines] = useState([
         {
           point_1: {
             x: 100,
@@ -63,7 +65,7 @@ export default function DrawBoard(props) {
     )
 
     function getSelectedPoint(point, index){
-        return linePoints[index][point];
+        return lines[index][point];
     }
 
     const startDrag = useCallback(
@@ -97,8 +99,8 @@ export default function DrawBoard(props) {
                 const actualPoint = getSelectedPoint(point,index)
                 actualPoint.x = position.x - offset.x;
                 actualPoint.y = position.y - offset.y;
-                console.log(linePoints)
-                setLinePoints(prevPoints => [...prevPoints]);
+                console.log(lines)
+                setlines(prevPoints => [...prevPoints]);
             }
         },
         [selectedPoint,getMousePosition]
@@ -109,8 +111,28 @@ export default function DrawBoard(props) {
         (evt)=> {
             console.log("end drag ....");
             boardRef.current.removeEventListener('mousemove',drag);
+            if(selectedPoint){
+              const {point,index,offset} = selectedPoint;
+              const actualPoint = getSelectedPoint(point,index)
+              let closestPointFound = false;
+              lines.forEach((line,index) =>{
+                if(!closestPointFound){
+                  if(distance(actualPoint,line.point_1) < minTwoPointsDistance){
+                    actualPoint.x = line.point_1.x;
+                    actualPoint.y = line.point_1.y;
+                    closestPointFound = true;
+                  }else if(distance(actualPoint,line.point_2) < minTwoPointsDistance){
+                    actualPoint.x = line.point_2.x;
+                    actualPoint.y = line.point_2.y;
+                    closestPointFound = true;
+                  }
+                }
+              })
+              setlines(prevPoints => [...prevPoints]);
+            }
+            
         },
-        [boardRef,drag],
+        [boardRef,drag,selectedPoint],
     )
 
     useEffect(() => {
@@ -122,26 +144,36 @@ export default function DrawBoard(props) {
         boardRef.current.addEventListener("mouseleave", endDrag)
     }, [boardRef,drag,startDrag,endDrag])
    
-    const result = [];
-    const points = linePoints.map(line => {
-        result.push(line.point_1);
-        result.push(line.point_2);
-    } )
+    // tool handlers
+
+    const handleAddLine = (event)=>{
+
+    }
+
+    const handleAjustLine = (event)=>{
+
+    }
+
+    const handleDeleteLine = (event)=>{
+
+    }
+
+    const handleSubmitGraph = (event)=>{
+
+    }
   
     return (
         <div className="painter">
             <svg ref={boardRef} id="mainBoard" xmlns="http://www.w3.org/2000/svg" className='draw-board'>
-            {/* {linePoints.map((line,index) => {
+            {lines.map((line,index) => {
                 return <Line key={JSON.stringify(line)} {...line} index={index} />
-            })} */}
-            {
-
-            }
+            })}
          </svg>
          <div className="actions">
-             <button >Add Line</button>
-             <button>delete Line</button>
-             <button>submit Graph</button>
+             <button name ={addLine}   onClick={handleAddLine}>Add Line</button>
+             <button name={adjustLine} onClick={handleAjustLine}> adjust Line</button>
+             <button name={deleteLine} onClick={handleDeleteLine}>delete Line</button>
+             <button name={submitGraph}onClick={handleSubmitGraph}>submit Graph</button>
          </div>
         </div>
         

@@ -1,5 +1,5 @@
 import React from "react";
-import DrawBoard, { DrawBoard2 } from "./DrawBoard";
+import DrawBoard from "./DrawBoard";
 import AnswerField from "../screens/TestScreen/components/AnswerField";
 import Graph from "./Graph";
 import "./style.css";
