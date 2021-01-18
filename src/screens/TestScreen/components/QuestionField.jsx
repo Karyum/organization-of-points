@@ -11,7 +11,9 @@ function QuestionField() {
           </div>
           <div className="timer"></div>
         </div>
-        <div className="answer-section"></div>
+        <div className="answer-section">
+        <svg className="shapes"></svg>
+        </div>
       </div>
       <div className="question-branches"></div>
     </div>
