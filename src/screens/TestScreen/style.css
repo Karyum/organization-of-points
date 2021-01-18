@@ -17,3 +17,60 @@
 .graph-line {
   padding: 5px;
 }
+
+.main-question-container {
+  display: flex;
+  width: 90vw;
+  height: 90vh;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+}
+
+.question-section {
+  display: flex;
+  width: 78%;
+  height: 90%;
+  background: #f1f7ff;
+  border-radius: 10px;
+  border: 1px solid #bc6c25;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.question-branches {
+  display: flex;
+  flex-direction: column;
+  width: 17%;
+  height: 90%;
+  background-color: #d9e9ff;
+  border: 2px solid #bc6c25;
+  border-radius: 10px;
+}
+.shapes {
+  width: 30vw;
+  height: 30vw;
+}
+.timer {
+  width: 150px;
+  background-color: #bc6c25;
+  height: 150px;
+  border-radius: 50%;
+}
+.question {
+  width: 75%;
+  display: flex;
+  background-color: white;
+  height: 40%;
+}
+.question-timer {
+  display: flex;
+  justify-content: space-around;
+  /* align-items: center; */
+  margin: 2%;
+  width: 100%;
+}
+.answer-section {
+  display: flex;
+  background-color: white;
+  width: 100%;
+}
