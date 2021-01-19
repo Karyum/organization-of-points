@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Timer from "../../../components/Timer";
 import ExamSteps from "../../../components/ExamSteps";
-import {} from "../../../utils/consts";
+import { lines } from "../../../utils/consts";
 import "../style.css";
 
 function AnswerField(props) {
