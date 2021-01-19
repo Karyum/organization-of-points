@@ -89,11 +89,10 @@ function AnswerField(props) {
     setRotateAngle((prevangle) => prevangle + 10);
   };
   return (
-    <div>
-      <Timer choosenTime={300000} style={{ fontSize: 25 }} />
-      <ExamSteps />
-      <svg ref={svgRef} className="question-branch-paper add-cursor">
-        <g transform={`rotate(${rotateAngle},150,150)`}>
+    <div className="answer-board-tools">
+      <div className={props.className[0]}>
+      <svg ref={svgRef} className={`${props.className[1]? props.className[1] : "question-branch-paper" } add-cursor`} transform={`rotate(${rotateAngle},0,0)`}>
+        <g >
           {lines.map((l, index) => {
             return (
               <line
@@ -126,6 +125,8 @@ function AnswerField(props) {
           })}
         </g>
       </svg>
+      </div>
+      
       <div className="tools">
         <button className="tool-btn" onClick={handleLeftRotate}>
           left Rotate
