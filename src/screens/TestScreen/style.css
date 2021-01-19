@@ -80,14 +80,31 @@
 }
 .answer-section {
   display: flex;
-  background-color: white;
   width: 75%;
   margin: 12px auto;
   justify-content: center;
   align-items: center;
   margin-top: 12px;
+}
+.svg-draw-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: calc(1px * calc(1.45 * var(--shape-size)));
+  width: calc(1px * calc(1.45 * var(--shape-size)));
+  background-color: white;
 }
 .solution {
-  margin: 0 calc(1px * calc(0.25 * var(--shape-size)));
+  border: none;
+}
+
+.answer-board-tools {
+  display: flex;
+  flex-direction: column;
+}
+
+.tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

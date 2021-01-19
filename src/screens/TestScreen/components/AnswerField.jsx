@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Timer from "../../../components/Timer";
 import ExamSteps from "../../../components/ExamSteps";
+import {} from "../../../utils/consts";
 import "../style.css";
 
 function AnswerField(props) {
@@ -84,43 +85,50 @@ function AnswerField(props) {
     setRotateAngle((prevangle) => prevangle + 10);
   };
   return (
-    <div>
-      <Timer choosenTime={300000} style={{ fontSize: 25 }} />
-      <ExamSteps />
-      <svg ref={svgRef} className="question-branch-paper add-cursor">
-        <g transform={`rotate(${rotateAngle},150,150)`}>
-          {lines.map((l, index) => {
-            return (
-              <line
-                key={index}
-                x1={l.point1.x}
-                y1={l.point1.y}
-                x2={l.point2.x}
-                y2={l.point2.y}
-                strokeWidth="3"
-                stroke="green"
-                data-index={index}
-                className={`graph-line ${
-                  action === "delete" ? "delete-cursor" : "add-cursor"
-                }`}
-                onClick={handleLineClick}
-              />
-            );
-          })}
-          {props.points.map((point, index) => {
-            return (
-              <circle
-                key={index}
-                cx={point.x}
-                cy={point.y}
-                r="10"
-                fill="red"
-                onClick={handleCircleClick}
-              />
-            );
-          })}
-        </g>
-      </svg>
+    <div className="answer-board-tools">
+      <div className={props.className[0]}>
+        <svg
+          ref={svgRef}
+          className={`${
+            props.className[1] ? props.className[1] : "question-branch-paper"
+          } add-cursor`}
+          transform={`rotate(${rotateAngle},0,0)`}
+        >
+          <g>
+            {lines.map((l, index) => {
+              return (
+                <line
+                  key={index}
+                  x1={l.point1.x}
+                  y1={l.point1.y}
+                  x2={l.point2.x}
+                  y2={l.point2.y}
+                  strokeWidth="3"
+                  stroke="green"
+                  data-index={index}
+                  className={`graph-line ${
+                    action === "delete" ? "delete-cursor" : "add-cursor"
+                  }`}
+                  onClick={handleLineClick}
+                />
+              );
+            })}
+            {props.points.map((point, index) => {
+              return (
+                <circle
+                  key={index}
+                  cx={point.x}
+                  cy={point.y}
+                  r="10"
+                  fill="red"
+                  onClick={handleCircleClick}
+                />
+              );
+            })}
+          </g>
+        </svg>
+      </div>
+
       <div className="tools">
         <button className="tool-btn" onClick={handleLeftRotate}>
           left Rotate
