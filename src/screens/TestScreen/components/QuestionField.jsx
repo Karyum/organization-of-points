@@ -1,12 +1,16 @@
 import React from "react";
 
+import ShapesInfo from "./ShapesInfo";
+
 function QuestionField() {
   return (
     <div className="main-question-container">
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-            <svg className="shapes"></svg>
+            <svg className="shapes">
+              <ShapesInfo />
+            </svg>
             <svg className="shapes"></svg>
           </div>
           {/* <div className="timer"></div> */}

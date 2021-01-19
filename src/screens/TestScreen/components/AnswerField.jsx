@@ -40,11 +40,6 @@ function AnswerField(props) {
     }
   }, [currentLine]);
 
-  // useEffect(() => {
-  //     svgRef.current.classList.toggle("delete-cursor");
-  //     svgRef.current.classList.toggle("add-cursor");
-  // }, [action]);
-
   // handlers
   const handleLineClick = (event) => {
     console.log(action);
