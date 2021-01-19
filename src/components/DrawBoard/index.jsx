@@ -64,9 +64,11 @@ export default function DrawBoard(props) {
         [boardRef]
     )
 
-    function getSelectedPoint(point, index){
+    const getSelectedPoint = useCallback ((point, index)=>{
+        console.log({point,index})
+        console.log(lines);
         return lines[index][point];
-    }
+    },[action])
 
     const startDrag = useCallback(
         (evt)=> {
@@ -84,7 +86,7 @@ export default function DrawBoard(props) {
             }
         }
     
-       , [setSelectedPoint]
+       , [setSelectedPoint,action]
     )
 
 
@@ -139,15 +141,41 @@ export default function DrawBoard(props) {
         setBoardSize(boardRef.current.clientHeight);
         console.log("reloaded")
         boardRef.current.addEventListener("mousedown", startDrag)
-        boardRef.current.addEventListener("mousemove", drag)
+        // boardRef.current.addEventListener("mousemove", drag)
         boardRef.current.addEventListener("mouseup", endDrag)
         boardRef.current.addEventListener("mouseleave", endDrag)
     }, [boardRef,drag,startDrag,endDrag])
+
+    useEffect(() => {
+      boardRef.current.addEventListener("mousemove", drag)
+    }, [selectedPoint])
    
+    useEffect(() => {
+      console.log('re-rendered....')
+      console.log(lines);
+      console.log("Action...",action)
+    })
     // tool handlers
 
     const handleAddLine = (event)=>{
-
+      console.log("Line added ...");
+      boardRef.current.removeEventListener('mousemove',drag);
+      const newLine = {
+        point_1: {
+        x: 20,
+        y: 280,
+      },
+      point_2: {
+        x: 20,
+        y: 240,
+      },
+    };
+  
+      setlines(prev => {
+        prev.push({...newLine});
+        return [...prev];
+      })
+      setAction(addLine);
     }
 
     const handleAjustLine = (event)=>{
@@ -161,12 +189,11 @@ export default function DrawBoard(props) {
     const handleSubmitGraph = (event)=>{
 
     }
-  
     return (
         <div className="painter">
             <svg ref={boardRef} id="mainBoard" xmlns="http://www.w3.org/2000/svg" className='draw-board'>
             {lines.map((line,index) => {
-                return <Line key={JSON.stringify(line)} {...line} index={index} />
+                return <Line key={JSON.stringify(line)+index} {...line} index={index} fill={index === lines.length -1 ? 'blue' : 'red'}/>
             })}
          </svg>
          <div className="actions">
