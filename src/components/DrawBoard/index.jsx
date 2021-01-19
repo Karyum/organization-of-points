@@ -17,6 +17,7 @@ export default function DrawBoard(props) {
     const boardRef = useRef()
     const [boardSize, setBoardSize] = useState(0);
     const [action,setAction] = useState(adjustLine)
+    const [linesNum, setLinesNum] =useState(3);
     const [selectedPoint,setSelectedPoint] = useState(null);
     const [lines, setlines] = useState([
         {
@@ -68,7 +69,7 @@ export default function DrawBoard(props) {
         console.log({point,index})
         console.log(lines);
         return lines[index][point];
-    },[action])
+    },[linesNum])
 
     const startDrag = useCallback(
         (evt)=> {
@@ -86,7 +87,7 @@ export default function DrawBoard(props) {
             }
         }
     
-       , [setSelectedPoint,action]
+       , [setSelectedPoint,getSelectedPoint]
     )
 
 
@@ -105,7 +106,7 @@ export default function DrawBoard(props) {
                 setlines(prevPoints => [...prevPoints]);
             }
         },
-        [selectedPoint,getMousePosition]
+        [selectedPoint,getMousePosition,getSelectedPoint]
     )
 
 
@@ -152,8 +153,7 @@ export default function DrawBoard(props) {
    
     useEffect(() => {
       console.log('re-rendered....')
-      console.log(lines);
-      console.log("Action...",action)
+      console.log(lines)
     })
     // tool handlers
 
@@ -175,7 +175,7 @@ export default function DrawBoard(props) {
         prev.push({...newLine});
         return [...prev];
       })
-      setAction(addLine);
+      setLinesNum(prev => prev+1)
     }
 
     const handleAjustLine = (event)=>{
