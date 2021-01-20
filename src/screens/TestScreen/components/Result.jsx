@@ -34,7 +34,7 @@ function Result(props) {
     <div>
       
       <p>{MessageArr[starNum.length - 1]}</p>
-      <div className="stars">
+      <div className="stars" style={{display:'flex'}}>
         {starNum.map((star, index) => (
           <div key={index}>{starImg}</div>
         ))}
