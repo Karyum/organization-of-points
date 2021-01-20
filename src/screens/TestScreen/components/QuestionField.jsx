@@ -25,14 +25,14 @@ function QuestionField() {
   const isDone = (qq) => done.find(q=> q===q);
 
   const nextShape = () => {
-    if(count + 1 === shapes.length){
-      setCount(0);
-    } 
+    // if(count + 1 === shapes.length){
+    //   setCount(0);
+    // } 
     
-    if(isFinish) {
+    // if(isFinish) {
     
-      setCount(count + 1);
-    }
+    //   setCount(count + 1);
+    // }
   }
 
   const prevShape = () => {
@@ -52,8 +52,8 @@ function QuestionField() {
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
+              <ShapesInfo shape={currentShape} infoType='line'/>
               <ShapesInfo shape={currentShape}/>
-            <svg className="shapes"></svg>
           </div>
         </div>
         <div className="answer-section">
