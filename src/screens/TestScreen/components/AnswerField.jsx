@@ -1,4 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
+import { Button, IconButton } from "@material-ui/core";
+import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import RotateRightIcon from "@material-ui/icons/RotateRight";
+import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
+import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import Timer from "../../../components/Timer";
 import ExamSteps from "../../../components/ExamSteps";
 import { lines } from "../../../utils/consts";
@@ -130,21 +135,32 @@ function AnswerField(props) {
       </div>
 
       <div className="tools">
-        <button className="tool-btn" onClick={handleLeftRotate}>
-          left Rotate
-        </button>
-        <button className="tool-btn" onClick={handleRightRotate}>
-          right Rotate
-        </button>
+        <IconButton aria-label="left" onClick={handleLeftRotate}>
+          <RotateLeftIcon style={{ fontSize: 40 }} />
+        </IconButton>
+
+        <IconButton aria-label="right" onClick={handleRightRotate}>
+          <RotateRightIcon style={{ fontSize: 40 }} />
+        </IconButton>
         <button className="tool-btn" name="delete" onClick={handleAction}>
           erase
         </button>
-        <button className="tool-btn" name="add" onClick={handleAction}>
-          line
-        </button>
+        <IconButton aria-label="erase" name="delete" onClick={handleAction}>
+          <DeleteSweepIcon style={{ fontSize: 40 }} />
+        </IconButton>
+
+        <IconButton aria-label="add" name="add" onClick={handleAction}>
+          <LinearScaleIcon style={{ fontSize: 40 }} />
+        </IconButton>
       </div>
     </div>
   );
 }
 
 export default AnswerField;
+
+{
+  /* <button className="tool-btn" name="add" onClick={handleAction}>
+line
+</button> */
+}
