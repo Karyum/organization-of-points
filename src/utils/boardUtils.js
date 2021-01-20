@@ -5,6 +5,12 @@ function scalePoint(point, factor) {
   return { x: x * factor, y: y * factor };
 }
 
+/**
+ *
+ * @param {Array} shape
+ * @param {Number} boardSize
+ * this function will fit normalized shape to your displaying square board
+ */
 export function adjustShapeToBoard(shape, boardSize) {
   return shape.map((line) => {
     const point_1 = scalePoint(line.point_1, boardSize);
