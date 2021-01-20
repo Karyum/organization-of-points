@@ -30,3 +30,8 @@ export const lines = [
     },
   },
 ];
+export const points = [
+  { x: 100, y: 100 },
+  { x: 200, y: 100 },
+  { x: 200, y: 200 },
+];

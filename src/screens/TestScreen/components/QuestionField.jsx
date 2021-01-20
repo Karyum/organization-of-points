@@ -1,5 +1,5 @@
 import React from "react";
-
+import { lines, points } from "../../../utils/consts";
 import ShapesInfo from "./ShapesInfo";
 
 import AnswerField from "./AnswerField";
@@ -10,9 +10,11 @@ function QuestionField() {
         <div className="question-timer">
           <div className="question">
             <svg className="shapes">
-              <ShapesInfo />
+              <ShapesInfo linesArr={lines} />
             </svg>
-            <svg className="shapes"></svg>
+            <svg className="shapes">
+              <ShapesInfo pointsArr={points} />
+            </svg>
           </div>
           {/* <div className="timer"></div> */}
         </div>

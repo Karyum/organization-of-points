@@ -1,4 +1,4 @@
-import shapes from "../../public/data.json";
+import shapes from "./data.json";
 
 function scalePoint(point, factor) {
   const { x, y } = point;
