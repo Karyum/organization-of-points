@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { lines, points } from "../../../utils/consts";
 import { Button, IconButton } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -11,7 +11,7 @@ import ShapesInfo from "./ShapesInfo";
 import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 
-const currentShape = shapes[4];
+// const currentShape = shapes[1];
 
 
 function QuestionField() {
@@ -19,8 +19,8 @@ function QuestionField() {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState([]);
 
-  const currentShape = adjustShapeToBoard(shapes[count], 240);
-  const currentShapePoints = getShapePoints(currentShape);
+
+  // const currentShapePoints = getShapePoints(currentShape);
 
   const isDone = (qq) => done.find(q=> q===q);
 
@@ -30,7 +30,6 @@ function QuestionField() {
     } 
     
     if(done.length >= 0) {
-    
       setCount(count + 1);
     }
   }
@@ -43,9 +42,8 @@ function QuestionField() {
     }
   }
 
-
-
-
+  console.log(count);
+  const currentShape = shapes[count];
   return (
     <div className="main-question-container">
       <ExamSteps />
