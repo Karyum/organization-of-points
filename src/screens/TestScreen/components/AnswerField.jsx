@@ -10,6 +10,7 @@ import { lines, points } from "../../../utils/consts";
 import "../style.css";
 
 function AnswerField(props) {
+
   const svgRef = useRef();
   //states
   const [rotateAngle, setRotateAngle] = useState(0);
@@ -22,7 +23,6 @@ function AnswerField(props) {
 
   //useEffect
   useEffect(() => {
-    console.log(currentLine);
 
     if (currentLine.point1 && currentLine.point2) {
       const reversedLine = {
@@ -48,9 +48,9 @@ function AnswerField(props) {
 
   // handlers
   const handleLineClick = (event) => {
-    console.log(action);
+  
     if (action === "delete") {
-      console.log(event.target.dataset);
+      
       const index = event.target.dataset.index;
       setLines((prev) => {
         prev[index] = "deleted";
@@ -60,7 +60,7 @@ function AnswerField(props) {
   };
 
   const handleAction = (event) => {
-    console.log("Action...", event.target.name);
+    
     setAction(event.target.name);
   };
 
@@ -156,6 +156,9 @@ function AnswerField(props) {
         <IconButton aria-label="add" name="add" onClick={handleAction}>
           <LinearScaleIcon style={{ fontSize: 40 }} />
         </IconButton>
+        <Button color="primary" >
+          FINISH
+        </Button>
       </div>
     </div>
   );

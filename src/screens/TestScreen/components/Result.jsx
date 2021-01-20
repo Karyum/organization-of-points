@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import imgUrl from "../../../img-icons/star.svg";
 
 function Result(props) {
   const result = props.result;
@@ -14,7 +15,7 @@ function Result(props) {
       (prev) => (result >= 9 && [1, 1, 1]) || (result >= 5 && [1, 1]) || [1]
     );
 
-  const starImg = <img src="../../../img-icons/star.svg" alt="STAR"></img>;
+  const starImg = <img style={{ width: 150 }} src={imgUrl}></img>;
 
   useEffect(() => {
     getResult();
