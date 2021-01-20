@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+// const shapes = require("../../public/data.json");
+
+>>>>>>> 33da0562c218ca11db279e3c8650d9fd0b246dd0
 function scalePoint(point, factor) {
   const { x, y } = point;
   return { x: x * factor, y: y * factor };
@@ -15,4 +20,24 @@ export function adjustShapeToBoard(shape, boardSize) {
     const point_2 = scalePoint(line.point_2, boardSize);
     return { point_1, point_2 };
   });
+}
+
+/**
+ *
+ * @param {Array} shape - array of objects like {point_1{
+ * x: x_xoordinate,
+ * y: y_coordinate},
+ * point_2{
+ * x: x_xoordinate,
+ * y: y_coordinate}}
+ * @returns {Array} shape points - the shape points
+ */
+
+export function getShapePoints(shape) {
+  const result = [];
+  shape.forEach((line) => {
+    const { point_1, point_2 } = line;
+    result.push(point_1, point_2);
+  });
+  return result;
 }
