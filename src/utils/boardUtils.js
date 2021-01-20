@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 // const shapes = require("../../public/data.json");
 
->>>>>>> 33da0562c218ca11db279e3c8650d9fd0b246dd0
 function scalePoint(point, factor) {
   const { x, y } = point;
   return { x: x * factor, y: y * factor };
