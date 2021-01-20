@@ -8,10 +8,11 @@ import RotateRightIcon from "@material-ui/icons/RotateRight";
 import ExamSteps from "../../../components/ExamSteps";
 import shapes from "../../../data/data.json";
 import ShapesInfo from "./ShapesInfo";
-import { adjustShapeToBoard } from "../../../utils/boardUtils";
+import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 
-const currentShape = adjustShapeToBoard(shapes[0], 240);
+const currentShape = adjustShapeToBoard(shapes[4], 240);
+const currentShapePoints = getShapePoints(currentShape)
 
 function QuestionField() {
   return (
@@ -37,11 +38,9 @@ function QuestionField() {
           </IconButton>
           <AnswerField
             className={["svg-draw-container", "shapes solution"]}
-            points={[
-              { x: 100, y: 100 },
-              { x: 200, y: 100 },
-              { x: 200, y: 200 },
-            ]}
+            points={
+              currentShapePoints
+            }
           />
 
           <IconButton
