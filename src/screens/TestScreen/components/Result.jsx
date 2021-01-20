@@ -1,28 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
+import imgUrl from '../../../img-icons/star.svg';
 
 function Result(props) {
-  let stars = [0, 0, 0];
-  if (props.result > 10) {
-    stars.forEach(star, (index) => {
-      star[index] = "<img src=../../../img-icons/star.svg></img>";
-    });
-  } else if (props.result > 5) {
-    stars[0] = "<img src=../../../img-icons/star.svg></img>";
-    stars[1] = "<img src=../../../img-icons/star.svg></img>";
-  } else {
-    stars[0] = "<img src=../../../img-icons/star.svg></img>";
-  }
+  const result = props.result;
+  const [starNum, setStarNum] = React.useState(null);
+  const MessageArr = [
+    "You got only one star",
+    "Not bad you got Two Stars",
+    "Great job You got THREE stars",
+  ];
+
+  // const getResult = () => {
+  //   if (props.result >= 9) {
+  //     setStarNum([1, 1, 1]);
+  //   } else if (props.result >= 5) {
+  //     setStarNum([1, 1]);
+  //   } else {
+  //     setStarNum([1]);
+  //   }
+  // };
+
+  const getResult = () => setStarNum(prev=> result >= 9 && [1,1,1] || result >= 5 && [1,1] || [1]);
+  
+
+  const starImg = <img style={{width: 150}} src={imgUrl}></img>;
+
+  useEffect(() => {
+    getResult();
+  }, []);
+
+  if (!starNum) return <p>Something went wrong</p>;
   return (
     <div>
-      {stars == 3 ? (
-        <p>Great job You got THREE stars</p>
-      ) : stars == 2 ? (
-        <p>Not bad you got Two Stars</p>
-      ) : (
-        <p>You got only one star</p>
-      )}
-
-      <div className="stars">{stars.map((star, index) => {})}</div>
+      
+      <p>{MessageArr[starNum.length - 1]}</p>
+      <div className="stars">
+        {starNum.map((star, index) => (
+          <div key={index}>{starImg}</div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -11,8 +11,6 @@ import "../style.css";
 
 function AnswerField(props) {
 
-  const {setIsFinish } = props;
-
   const svgRef = useRef();
   //states
   const [rotateAngle, setRotateAngle] = useState(0);
@@ -158,7 +156,7 @@ function AnswerField(props) {
         <IconButton aria-label="add" name="add" onClick={handleAction}>
           <LinearScaleIcon style={{ fontSize: 40 }} />
         </IconButton>
-        <Button color="primary" onClick={()=> setIsFinish(true)}>
+        <Button color="primary" >
           FINISH
         </Button>
       </div>

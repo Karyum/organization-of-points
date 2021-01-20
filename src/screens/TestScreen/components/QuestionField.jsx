@@ -15,11 +15,12 @@ import AnswerField from "./AnswerField";
 function QuestionField() {
 
   const [count, setCount] = useState(0);
-  const [isFinish, setIsFinish] = useState(false);
+  const [done, setDone] = useState([]);
 
   const currentShape = adjustShapeToBoard(shapes[count], 240);
   const currentShapePoints = getShapePoints(currentShape);
 
+  const isDone = (qq) => done.find(q=> q===q);
 
   const nextShape = () => {
     if(count + 1 === shapes.length){
@@ -27,7 +28,7 @@ function QuestionField() {
     } 
     
     if(isFinish) {
-      setIsFinish(false);
+    
       setCount(count + 1);
     }
   }
@@ -70,8 +71,6 @@ function QuestionField() {
             points={
               currentShapePoints
             }
-
-            setIsFinish={setIsFinish}
           />
 
           <IconButton

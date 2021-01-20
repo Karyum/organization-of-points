@@ -4,9 +4,12 @@ import AnswerField from "../screens/TestScreen/components/AnswerField";
 import Graph from "./Graph";
 import "./style.css";
 import QuestionField from "../screens/TestScreen/components/QuestionField";
+import Result from "../screens/TestScreen/components/Result";
+
 export default function AppTest() {
   return (
-    <QuestionField />
+    <Result result={9} />
+    // <QuestionField />
     // <AnswerField
     // points={[
     //   { x: 100, y: 100 },
