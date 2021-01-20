@@ -10,12 +10,9 @@ function Result(props) {
     "Great job You got THREE stars",
   ];
 
-  const getResult = () =>
-    setStarNum(
-      (prev) => (result >= 9 && [1, 1, 1]) || (result >= 5 && [1, 1]) || [1]
-    );
-
-  const starImg = <img style={{ width: 150 }} src={imgUrl}></img>;
+  const getResult = () => setStarNum(prev=> result >= 9 && [1,1,1] || result >= 5 && [1,1] || [1]);
+  
+  const starImg = <img style={{width: 150}} src={imgUrl}></img>;
 
   useEffect(() => {
     getResult();

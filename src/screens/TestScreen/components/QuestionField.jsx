@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { lines, points } from "../../../utils/consts";
 import { Button, IconButton } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -11,40 +11,37 @@ import ShapesInfo from "./ShapesInfo";
 import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 
-const currentShape = shapes[4];
 
 
 function QuestionField() {
 
   const [count, setCount] = useState(0);
-  const [done, setDone] = useState([]);
 
-  const currentShape = shapes[count];
-  
+  const [done, setDone] = useState([]);
 
   const isDone = (qq) => done.find(q=> q===q);
 
   const nextShape = () => {
-    // if(count + 1 === shapes.length){
-    //   setCount(0);
-    // } 
+    if(count + 1 === shapes.length - 1){
+      setCount(0);
+    } 
     
-    // if(isFinish) {
-    
-    //   setCount(count + 1);
-    // }
+    if(done.length >= 0) {
+      setCount((prev)=> prev + 1);
+    }
   }
 
   const prevShape = () => {
     if(count - 1 === -1){
       setCount(0);
     } else {
-      setCount(count - 1);
+      setCount((prev)=> prev - 1);
     }
   }
 
-
-
+  useEffect(() => {
+    console.log(shapes[count]);
+  },[count])
 
   return (
     <div className="main-question-container">
@@ -67,8 +64,9 @@ function QuestionField() {
           <AnswerField
             className={["svg-draw-container", "shapes solution"]}
             shape={
-              currentShape
+              shapes[count]
             }
+            
           />
 
           <IconButton

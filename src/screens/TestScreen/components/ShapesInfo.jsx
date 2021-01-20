@@ -8,12 +8,12 @@ function ShapesInfo(props) {
   const [point, setPoint] =useState([]);
   useEffect(() => {
     setBoardSize(boardRef.current.clientHeight);
-  },)
+  },[props.shape])
 
   useEffect(() => {
     const adjustedShape = adjustShapeToBoard(props.shape,boardSize);
     setLines(adjustedShape);
-  }, [boardSize])
+  }, [boardSize, props.shape])
 
  
   return (
