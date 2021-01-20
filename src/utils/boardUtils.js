@@ -38,3 +38,15 @@ export function getShapePoints(shape) {
   });
   return result;
 }
+
+/**
+ *
+ * @param {*} points
+ * @param {*} factor
+ */
+export function reScalePoints(points, factor) {
+  return points.map((point) => {
+    const { x, y } = point;
+    return { x: x * factor, y: y * factor };
+  });
+}

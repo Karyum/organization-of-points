@@ -10,8 +10,8 @@ import ShapesInfo from "./ShapesInfo";
 import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 
-const currentShape = adjustShapeToBoard(shapes[4], 240);
-const currentShapePoints = getShapePoints(currentShape)
+const currentShape = shapes[4];
+
 
 function QuestionField() {
   return (
@@ -20,9 +20,7 @@ function QuestionField() {
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-            <svg className="shapes">
-              <ShapesInfo />
-            </svg>
+              <ShapesInfo shape={currentShape}/>
             <svg className="shapes"></svg>
           </div>
         </div>
@@ -35,8 +33,8 @@ function QuestionField() {
           </IconButton>
           <AnswerField
             className={["svg-draw-container", "shapes solution"]}
-            points={
-              currentShapePoints
+            shape={
+              currentShape
             }
           />
 

@@ -7,11 +7,14 @@ import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import Timer from "../../../components/Timer";
 import ExamSteps from "../../../components/ExamSteps";
 import { lines } from "../../../utils/consts";
+import {adjustShapeToBoard,getShapePoints,reScalePoints} from "../../../utils/boardUtils"
 import "../style.css";
 
 function AnswerField(props) {
   const svgRef = useRef();
   //states
+  const [points, setPoints] = useState([]);
+  const [svgSize, setSvgSize] = useState(1);
   const [rotateAngle, setRotateAngle] = useState(0);
   const [lines, setLines] = useState([]);
   const [currentLine, setCurrentLine] = useState({
@@ -21,8 +24,18 @@ function AnswerField(props) {
   const [action, setAction] = useState("add");
 
   //useEffect
+
+   useEffect(() => {
+     setSvgSize(svgRef.current.clientHeight);
+   }, [])
+
+   useEffect(() => {
+     const scaledShapePoints = reScalePoints(getShapePoints(props.shape),svgSize);
+     setPoints(scaledShapePoints); 
+   }, [svgSize])
+
+
   useEffect(() => {
-    console.log(currentLine);
 
     if (currentLine.point1 && currentLine.point2) {
       const reversedLine = {
@@ -118,7 +131,7 @@ function AnswerField(props) {
                 />
               );
             })}
-            {props.points.map((point, index) => {
+            {points.length ? points.map((point, index) => {
               return (
                 <circle
                   key={index}
@@ -129,7 +142,7 @@ function AnswerField(props) {
                   onClick={handleCircleClick}
                 />
               );
-            })}
+            }):<g></g>}
           </g>
         </svg>
       </div>
