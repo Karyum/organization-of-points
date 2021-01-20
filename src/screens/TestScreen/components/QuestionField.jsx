@@ -19,8 +19,8 @@ function QuestionField() {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState([]);
 
-  const currentShape = adjustShapeToBoard(shapes[count], 240);
-  const currentShapePoints = getShapePoints(currentShape);
+  const currentShape = shapes[count];
+  
 
   const isDone = (qq) => done.find(q=> q===q);
 
