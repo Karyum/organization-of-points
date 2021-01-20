@@ -8,14 +8,16 @@ import Result from "../screens/TestScreen/components/Result";
 
 export default function AppTest() {
   return (
-    <Result result={9} />
-    // <QuestionField />
-    // <AnswerField
-    // points={[
-    //   { x: 100, y: 100 },
-    //   { x: 200, y: 100 },
-    //   { x: 200, y: 200 },
-    // ]}
-    // />
+    // <Result result={6} />
+    <>
+    <QuestionField />
+    {/* <AnswerField
+    points={[
+      { x: 100, y: 100 },
+      { x: 200, y: 100 },
+      { x: 200, y: 200 },
+    ]}
+    /> */}
+    </>
   );
 }

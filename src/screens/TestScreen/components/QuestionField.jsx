@@ -11,6 +11,8 @@ import ShapesInfo from "./ShapesInfo";
 import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 
+const currentShape = shapes[4];
+
 
 function QuestionField() {
 
@@ -27,7 +29,7 @@ function QuestionField() {
       setCount(0);
     } 
     
-    if(isFinish) {
+    if(done.length >= 0) {
     
       setCount(count + 1);
     }
@@ -50,12 +52,8 @@ function QuestionField() {
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-            <svg className="shapes">
-              <ShapesInfo linesArr={lines} />
-            </svg>
-            <svg className="shapes">
-              <ShapesInfo pointsArr={points} />
-            </svg>
+              <ShapesInfo shape={currentShape}/>
+            <svg className="shapes"></svg>
           </div>
         </div>
         <div className="answer-section">
@@ -68,8 +66,8 @@ function QuestionField() {
           </IconButton>
           <AnswerField
             className={["svg-draw-container", "shapes solution"]}
-            points={
-              currentShapePoints
+            shape={
+              currentShape
             }
           />
 

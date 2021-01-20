@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import imgUrl from '../../../img-icons/star.svg';
+import imgUrl from "../../../img-icons/star.svg";
 
 function Result(props) {
   const result = props.result;
@@ -21,7 +21,6 @@ function Result(props) {
   if (!starNum) return <p>Something went wrong</p>;
   return (
     <div>
-      
       <p>{MessageArr[starNum.length - 1]}</p>
       <div className="stars" style={{display:'flex'}}>
         {starNum.map((star, index) => (
