@@ -8,7 +8,7 @@ import Result from "../screens/TestScreen/components/Result";
 
 export default function AppTest() {
   return (
-    <Result result={9} />
+    <Result result={6} />
     // <QuestionField />
     // <AnswerField
     // points={[
