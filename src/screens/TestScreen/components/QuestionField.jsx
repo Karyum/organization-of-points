@@ -11,26 +11,23 @@ import ShapesInfo from "./ShapesInfo";
 import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 
-// const currentShape = shapes[1];
 
 
 function QuestionField() {
 
   const [count, setCount] = useState(0);
+
   const [done, setDone] = useState([]);
-
-
-  // const currentShapePoints = getShapePoints(currentShape);
 
   const isDone = (qq) => done.find(q=> q===q);
 
   const nextShape = () => {
-    if(count + 1 === shapes.length){
+    if(count + 1 === shapes.length - 1){
       setCount(0);
     } 
     
     if(done.length >= 0) {
-      setCount(count + 1);
+      setCount((prev)=> prev + 1);
     }
   }
 
@@ -38,19 +35,21 @@ function QuestionField() {
     if(count - 1 === -1){
       setCount(0);
     } else {
-      setCount(count - 1);
+      setCount((prev)=> prev - 1);
     }
   }
 
-  console.log(count);
-  const currentShape = shapes[count];
+  useEffect(() => {
+    console.log(shapes[count]);
+  },[count])
+
   return (
     <div className="main-question-container">
       <ExamSteps />
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-              <ShapesInfo shape={currentShape}/>
+              <ShapesInfo shape={shapes[count]}/>
             <svg className="shapes"></svg>
           </div>
         </div>
@@ -65,8 +64,9 @@ function QuestionField() {
           <AnswerField
             className={["svg-draw-container", "shapes solution"]}
             shape={
-              currentShape
+              shapes[count]
             }
+            
           />
 
           <IconButton

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { Button, IconButton } from "@material-ui/core";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
@@ -10,7 +10,7 @@ import { lines } from "../../../utils/consts";
 import {adjustShapeToBoard,getShapePoints,reScalePoints} from "../../../utils/boardUtils"
 import "../style.css";
 
-function AnswerField(props) {
+const AnswerField = memo((props) => {
 
   const svgRef = useRef();
   //states
@@ -24,16 +24,14 @@ function AnswerField(props) {
   });
   const [action, setAction] = useState("add");
 
-  //useEffect
-
    useEffect(() => {
      setSvgSize(svgRef.current.clientHeight);
-   }, [])
+   }, []);
 
    useEffect(() => {
      const scaledShapePoints = reScalePoints(getShapePoints(props.shape),svgSize);
      setPoints(scaledShapePoints); 
-   }, [svgSize])
+   }, [svgSize]);
 
 
   useEffect(() => {
@@ -176,6 +174,6 @@ function AnswerField(props) {
       </div>
     </div>
   );
-}
+});
 
 export default AnswerField;

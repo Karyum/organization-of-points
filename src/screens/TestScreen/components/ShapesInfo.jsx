@@ -4,15 +4,16 @@ import { adjustShapeToBoard } from "../../../utils/boardUtils";
 function ShapesInfo(props) {
   const boardRef = useRef();
   const [boardSize,setBoardSize] = useState(1);
-  const [lines, setLines] = useState([])
+  const [lines, setLines] = useState([]);
+
   useEffect(() => {
     setBoardSize(boardRef.current.clientHeight);
-  },)
+  },[props.shape])
 
   useEffect(() => {
     const adjustedShape = adjustShapeToBoard(props.shape,boardSize);
     setLines(adjustedShape);
-  }, [boardSize])
+  }, [boardSize, props.shape])
 
  
   return (
