@@ -70,16 +70,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <line
-            id="l1"
-            onClick={handleLine}
-            x1="20"
-            y1="20"
-            x2="100"
-            y2="20"
-            strokeWidth="4"
-            stroke="black"
-          /> */
-}
