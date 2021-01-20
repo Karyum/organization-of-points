@@ -1,4 +1,5 @@
 import React from "react";
+import { lines, points } from "../../../utils/consts";
 import { Button, IconButton } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
