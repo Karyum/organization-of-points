@@ -142,10 +142,14 @@ function AnswerField(props) {
         <IconButton aria-label="right" onClick={handleRightRotate}>
           <RotateRightIcon style={{ fontSize: 40 }} />
         </IconButton>
-        <button className="tool-btn" name="delete" onClick={handleAction}>
-          erase
-        </button>
-        <IconButton aria-label="erase" name="delete" onClick={handleAction}>
+        <IconButton
+          aria-label="erase"
+          name="delete"
+          onClick={(e) => {
+            e.target.name = "delete";
+            handleAction(e);
+          }}
+        >
           <DeleteSweepIcon style={{ fontSize: 40 }} />
         </IconButton>
 
@@ -158,9 +162,3 @@ function AnswerField(props) {
 }
 
 export default AnswerField;
-
-{
-  /* <button className="tool-btn" name="add" onClick={handleAction}>
-line
-</button> */
-}

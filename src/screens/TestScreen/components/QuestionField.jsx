@@ -5,10 +5,13 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
 import ExamSteps from "../../../components/ExamSteps";
-
+import shapes from "../../../data/data.json";
 import ShapesInfo from "./ShapesInfo";
-
+import { adjustShapeToBoard } from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
+
+const currentShape = adjustShapeToBoard(shapes[0], 240);
+
 function QuestionField() {
   return (
     <div className="main-question-container">
@@ -37,9 +40,7 @@ function QuestionField() {
               { x: 200, y: 200 },
             ]}
           />
-          {/* <div className="svg-draw-container">
-          <svg className="shapes solution"></svg>
-          </div> */}
+
           <IconButton
             aria-label="next"
             style={{ dropShadow: "1px 3px 19px #9e9e9e" }}
@@ -48,7 +49,6 @@ function QuestionField() {
           </IconButton>
         </div>
       </div>
-      {/* <div className="question-branches"></div> */}
     </div>
   );
 }
