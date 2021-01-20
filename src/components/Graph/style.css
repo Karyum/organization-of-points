@@ -9,5 +9,9 @@
   cursor: move;
 }
 .erasable {
-  cursor: url("/src/img-icons/Eraser-icon.png") 50 50, auto;
+  cursor: url("/src/img-icons/Eraser-icon.png") 16 16, auto;
+}
+
+.normal {
+  cursor: default;
 }
