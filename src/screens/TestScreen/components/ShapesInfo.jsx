@@ -1,5 +1,4 @@
 import React ,{useRef,useEffect,useState}from "react";
-// import { lines } from "../../../utils/consts";
 import { adjustShapeToBoard } from "../../../utils/boardUtils";
 
 function ShapesInfo(props) {
