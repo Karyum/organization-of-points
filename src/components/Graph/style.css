@@ -11,3 +11,7 @@
 .erasable {
   cursor: url("/src/img-icons/Eraser-icon.png") 16 16, auto;
 }
+
+.normal {
+  cursor: default;
+}
