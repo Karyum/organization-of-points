@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { Line } from "../Graph";
-import {shapes} from '../../utils/dataStore'
+import {shapes} from '../../utils/boardUtils'
 import "./style.css";
 
 function distance(p1, p2) {
