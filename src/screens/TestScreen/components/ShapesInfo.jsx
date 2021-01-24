@@ -17,7 +17,7 @@ function ShapesInfo(props) {
 
  
   return (
-    <svg ref={boardRef} className="question-shapes shapes">
+    <svg ref={boardRef} className={props.className? props.className :"question-shapes shapes"}>
       {lines.map((line, index) => {
         return props.infoType === 'line'?(
           <line

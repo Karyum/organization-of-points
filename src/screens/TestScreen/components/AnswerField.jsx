@@ -10,7 +10,7 @@ import { lines } from "../../../utils/consts";
 import {adjustShapeToBoard,getShapePoints,reScalePoints} from "../../../utils/boardUtils"
 import "../style.css";
 
-const AnswerField = memo((props) => {
+function AnswerField(props){
 
   const svgRef = useRef();
   //states
@@ -31,7 +31,12 @@ const AnswerField = memo((props) => {
    useEffect(() => {
      const scaledShapePoints = reScalePoints(getShapePoints(props.shape),svgSize);
      setPoints(scaledShapePoints); 
-   }, [svgSize]);
+     setLines([]);
+     setCurrentLine({
+      point1: null,
+      point2: null,
+    });
+   }, [svgSize,props.shape]);
 
 
   useEffect(() => {
@@ -174,6 +179,6 @@ const AnswerField = memo((props) => {
       </div>
     </div>
   );
-});
+};
 
 export default AnswerField;

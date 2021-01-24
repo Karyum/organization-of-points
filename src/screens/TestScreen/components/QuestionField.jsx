@@ -6,7 +6,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
 import ExamSteps from "../../../components/ExamSteps";
-import shapes from "../../../data/data.json";
+import shapes from "../../../data/shapes.json";
 import ShapesInfo from "./ShapesInfo";
 import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
@@ -49,8 +49,8 @@ function QuestionField() {
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-              <ShapesInfo shape={currentShape} infoType='line'/>
-              <ShapesInfo shape={currentShape}/>
+              <ShapesInfo shape={shapes[count]} infoType='line'/>
+              <ShapesInfo shape={shapes[count]}/>
           </div>
         </div>
         <div className="answer-section">
