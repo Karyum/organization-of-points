@@ -253,9 +253,7 @@ export function ExerciseWriter(props) {
   }, [])
 
 
-  const addShape = (index) => {
-    setSelectedShapes(prev => [...prev, shapes[index]]);
-  }
+
 
 
   return (
@@ -265,7 +263,7 @@ export function ExerciseWriter(props) {
         <div className="exam-writer-shapes-container">
           <div className="exam-writer-shapes">
             {shapes.map((shape, index) => {
-              return (<ShapeImage key={JSON.stringify(shape) + index} index={index} shape={shape} onClick={addShape} />)
+              return (<ShapeImage key={JSON.stringify(shape) + index} index={index} shape={shape} />)
             })}
           </div>
           <button>new shape</button>

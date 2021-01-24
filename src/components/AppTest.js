@@ -11,8 +11,8 @@ export default function AppTest() {
     window.localStorage.setItem("shapes", JSON.stringify(shapes));
   }, []);
   return (
-    // <QuestionField />
-    <ExerciseWriter></ExerciseWriter>
+    <QuestionField />
+    // <ExerciseWriter></ExerciseWriter>
     // <DrawBoard></DrawBoard>
   );
 }
