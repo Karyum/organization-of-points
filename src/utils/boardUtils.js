@@ -1,4 +1,4 @@
-// const shapes = require("../../public/data.json");
+// const shapes = require("../data/shapes.json");
 
 function scalePoint(point, factor) {
   const { x, y } = point;
@@ -39,6 +39,28 @@ export function getShapePoints(shape) {
   return result;
 }
 
+export function shapeCenter(shape) {
+  const shapePoints = getShapePoints(shape);
+  const x =
+    (Math.max(...shapePoints.map((point) => point.x)) +
+      Math.min(...shapePoints.map((point) => point.x))) /
+    2;
+  const y =
+    (Math.max(...shapePoints.map((point) => point.y)) +
+      Math.min(...shapePoints.map((point) => point.y))) /
+    2;
+  return { x, y };
+}
+
+export function shapeContainerParams(shape) {
+  const shapePoints = getShapePoints(shape);
+  const x = Math.min(...shapePoints.map((point) => point.x));
+  const y = Math.min(...shapePoints.map((point) => point.y));
+  const w = Math.max(...shapePoints.map((point) => point.x)) - x;
+  const h = Math.max(...shapePoints.map((point) => point.y)) - y;
+  return { x, y, w, h };
+}
+
 /**
  *
  * @param {*} points
@@ -50,3 +72,19 @@ export function reScalePoints(points, factor) {
     return { x: x * factor, y: y * factor };
   });
 }
+function multiplayTwoVectors(v1, v2) {
+  return v1.x * v2.x + v1.y * v2.y;
+}
+
+function vectorNorma(v) {
+  return Math.sqrt(multiplayTwoVectors(v, v));
+}
+export function calcTowVectorsDeg(v1, v2) {
+  return (
+    Math.acos(
+      multiplayTwoVectors(v1, v2) / (vectorNorma(v1) * vectorNorma(v2))
+    ) *
+    (180 / Math.PI)
+  );
+}
+// console.log(shapeCenter(shapes[1]));

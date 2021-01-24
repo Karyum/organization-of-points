@@ -8,3 +8,68 @@
 .actions {
   margin-top: 20px;
 }
+
+.exam-writer-main {
+  display: flex;
+  width: 90%;
+  justify-content: space-around;
+  margin: 20px auto;
+  /* border: 1px solid black; */
+}
+.exam-writer-paper {
+  background: rgb(239, 244, 248);
+  border: 1px solid black;
+}
+.exam-writer-draw-paper {
+  width: 500px;
+  height: 500px;
+  /* border: 1px solid black; */
+  box-sizing: border-box;
+}
+.exam-writer-shapes-container {
+  width: 200px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+}
+.exam-writer-shapes {
+  width: 100%;
+  height: 90%;
+  overflow: scroll;
+  /* border: 1px solid black; */
+}
+
+.exam-writer-shape-image {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.exam-writer-paper-tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.erasable {
+  cursor: url("../../img-icons/Eraser-icon.png"), auto;
+}
+
+.moveable {
+  cursor: url("../../img-icons/move.png"), auto;
+}
+
+.normal {
+  cursor: default;
+}
+.rotatable {
+  cursor: url("../../img-icons/custom-rotate.png"), auto !important;
+}
+
+.resizable {
+  cursor: url("../../img-icons/resize.png"), auto;
+}
