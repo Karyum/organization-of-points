@@ -7,10 +7,10 @@ import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import Timer from "../../../components/Timer";
 import ExamSteps from "../../../components/ExamSteps";
 import { lines } from "../../../utils/consts";
-import {adjustShapeToBoard,getShapePoints,reScalePoints} from "../../../utils/boardUtils"
+import { adjustShapeToBoard, getShapePoints, reScalePoints, reScaledShapes } from "../../../utils/boardUtils"
 import "../style.css";
 
-function AnswerField(props){
+function AnswerField(props) {
 
   const svgRef = useRef();
   //states
@@ -24,19 +24,29 @@ function AnswerField(props){
   });
   const [action, setAction] = useState("add");
 
-   useEffect(() => {
-     setSvgSize(svgRef.current.clientHeight);
-   }, []);
+  /// connect the branch shapes given branch== array of shapes....
 
-   useEffect(() => {
-     const scaledShapePoints = reScalePoints(getShapePoints(props.shape),svgSize);
-     setPoints(scaledShapePoints); 
-     setLines([]);
-     setCurrentLine({
+  const [branchShapes, setBranchShapes] = useState([]);
+
+  useEffect(() => {
+    setBranchShapes(prev => {
+      return reScaledShapes(props.branch, svgSize);
+    })
+  }, [props.branch, svgSize])
+
+  useEffect(() => {
+    setSvgSize(svgRef.current.clientHeight);
+  }, []);
+
+  useEffect(() => {
+    const scaledShapePoints = reScalePoints(getShapePoints(props.shape), svgSize);
+    setPoints(scaledShapePoints);
+    setLines([]);
+    setCurrentLine({
       point1: null,
       point2: null,
     });
-   }, [svgSize,props.shape]);
+  }, [svgSize, props.shape]);
 
 
   useEffect(() => {
@@ -65,9 +75,9 @@ function AnswerField(props){
 
   // handlers
   const handleLineClick = (event) => {
-  
+
     if (action === "delete") {
-      
+
       const index = event.target.dataset.index;
       setLines((prev) => {
         prev[index] = "deleted";
@@ -77,7 +87,7 @@ function AnswerField(props){
   };
 
   const handleAction = (event) => {
-    
+
     setAction(event.target.name);
   };
 
@@ -111,9 +121,8 @@ function AnswerField(props){
       <div className={props.className[0]}>
         <svg
           ref={svgRef}
-          className={`${
-            props.className[1] ? props.className[1] : "question-branch-paper"
-          } add-cursor`}
+          className={`${props.className[1] ? props.className[1] : "question-branch-paper"
+            } add-cursor`}
           transform={`rotate(${rotateAngle},0,0)`}
         >
           <g>
@@ -128,26 +137,38 @@ function AnswerField(props){
                   strokeWidth="3"
                   stroke="green"
                   data-index={index}
-                  className={`graph-line ${
-                    action === "delete" ? "delete-cursor" : "add-cursor"
-                  }`}
+                  className={`graph-line ${action === "delete" ? "delete-cursor" : "add-cursor"
+                    }`}
                   onClick={handleLineClick}
                 />
               );
             })}
-            {points.length ? points.map((point, index) => {
-              return (
-                <circle
-                  key={index}
-                  cx={point.x}
-                  cy={point.y}
-                  r="10"
-                  fill="red"
-                  onClick={handleCircleClick}
-                />
-              );
-            }):<g></g>}
           </g>
+          {branchShapes.map(shape => {
+            const { lines, center, translate, scale, rotateDeg } = shape;
+            return (<g transform={`rotate(${rotateDeg},${(center.x + translate.x) * scale.x},${(center.y + translate.y) * scale.y}) translate(${translate.x},${translate.y})`}>
+              {getShapePoints(lines).map((point, index) => {
+                return (
+                  <circle
+                    key={index}
+                    cx={point.x}
+                    cy={point.y}
+                    r="5"
+                    fill="red"
+                    onClick={handleCircleClick}
+                  />
+                );
+              })}
+              {
+                // lines.map(line => {
+                //   const { point_1, point_2 } = line;
+                //   return <line x1={point_1.x} y1={point_1.y} x2={point_2.x} y2={point_2.y} stroke="blue" strokeWidth='3' />
+                // })
+              }
+            </g>)
+          })
+          }
+
         </svg>
       </div>
 

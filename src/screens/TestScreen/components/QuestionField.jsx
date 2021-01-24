@@ -7,11 +7,13 @@ import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
 import ExamSteps from "../../../components/ExamSteps";
 import shapes from "../../../data/shapes.json";
+import questions from '../../../data/Questions.json'
 import ShapesInfo from "./ShapesInfo";
-import { adjustShapeToBoard ,getShapePoints} from "../../../utils/boardUtils";
+import { adjustShapeToBoard, getShapePoints } from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
+import QuestionInfo from "./QuestionInfo";
 
-
+const questionBranches = questions[1].branches;
 
 function QuestionField() {
 
@@ -19,29 +21,30 @@ function QuestionField() {
 
   const [done, setDone] = useState([]);
 
-  const isDone = (qq) => done.find(q=> q===q);
+  const isDone = (qq) => done.find(q => q === q);
 
   const nextShape = () => {
-    if(count + 1 === shapes.length - 1){
+    if (count + 1 === shapes.length - 1) {
       setCount(0);
-    } 
-    
-    if(done.length >= 0) {
-      setCount((prev)=> prev + 1);
+    }
+
+    if (done.length >= 0) {
+      setCount((prev) => prev + 1);
     }
   }
 
   const prevShape = () => {
-    if(count - 1 === -1){
+    if (count - 1 === -1) {
       setCount(0);
     } else {
-      setCount((prev)=> prev - 1);
+      setCount((prev) => prev - 1);
     }
   }
 
   useEffect(() => {
     console.log(shapes[count]);
-  },[count])
+    console.log(questionBranches);
+  }, [count])
 
   return (
     <div className="main-question-container">
@@ -49,8 +52,8 @@ function QuestionField() {
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-              <ShapesInfo shape={shapes[count]} infoType='line'/>
-              <ShapesInfo shape={shapes[count]}/>
+            <QuestionInfo question={questions[1].question} infoType='line' />
+            <QuestionInfo question={questions[1].question} />
           </div>
         </div>
         <div className="answer-section">
@@ -66,7 +69,8 @@ function QuestionField() {
             shape={
               shapes[count]
             }
-            
+            branch={questionBranches[count]}
+
           />
 
           <IconButton

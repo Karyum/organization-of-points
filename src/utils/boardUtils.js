@@ -1,6 +1,6 @@
 // const shapes = require("../data/shapes.json");
 
-function scalePoint(point, factor) {
+export function scalePoint(point, factor) {
   const { x, y } = point;
   return { x: x * factor, y: y * factor };
 }
@@ -79,6 +79,7 @@ function multiplayTwoVectors(v1, v2) {
 function vectorNorma(v) {
   return Math.sqrt(multiplayTwoVectors(v, v));
 }
+
 export function calcTowVectorsDeg(v1, v2) {
   return (
     Math.acos(
@@ -86,5 +87,16 @@ export function calcTowVectorsDeg(v1, v2) {
     ) *
     (180 / Math.PI)
   );
+}
+
+export function reScaledShapes(shapes, boardSize) {
+  const rescaledShapes = shapes.map((shape) => {
+    let { lines, center, translate, scale, rotateDeg } = shape;
+    lines = adjustShapeToBoard(lines, boardSize);
+    center = scalePoint(center, boardSize);
+    translate = scalePoint(translate, boardSize);
+    return { lines, center, translate, scale, rotateDeg };
+  });
+  return rescaledShapes;
 }
 // console.log(shapeCenter(shapes[1]));
