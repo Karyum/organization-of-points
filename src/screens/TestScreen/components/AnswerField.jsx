@@ -4,17 +4,13 @@ import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
-import Timer from "../../../components/Timer";
-import ExamSteps from "../../../components/ExamSteps";
-import { lines } from "../../../utils/consts";
-import { adjustShapeToBoard, getShapePoints, reScalePoints, reScaledShapes } from "../../../utils/boardUtils"
+import { getShapePoints, reScaledShapes } from "../../../utils/boardUtils"
 import "../style.css";
 
 function AnswerField(props) {
 
   const svgRef = useRef();
   //states
-  const [points, setPoints] = useState([]);
   const [svgSize, setSvgSize] = useState(1);
   const [rotateAngle, setRotateAngle] = useState(0);
   const [lines, setLines] = useState([]);
@@ -38,15 +34,6 @@ function AnswerField(props) {
     setSvgSize(svgRef.current.clientHeight);
   }, []);
 
-  useEffect(() => {
-    const scaledShapePoints = reScalePoints(getShapePoints(props.shape), svgSize);
-    setPoints(scaledShapePoints);
-    setLines([]);
-    setCurrentLine({
-      point1: null,
-      point2: null,
-    });
-  }, [svgSize, props.shape]);
 
 
   useEffect(() => {
@@ -129,7 +116,7 @@ function AnswerField(props) {
             {lines.map((l, index) => {
               return (
                 <line
-                  key={index}
+                  key={JSON.stringify(l) + index}
                   x1={l.point1.x}
                   y1={l.point1.y}
                   x2={l.point2.x}
@@ -145,9 +132,8 @@ function AnswerField(props) {
             })}
           </g>
           {branchShapes.map(shape => {
-            const { lines, center, translate, scale, rotateDeg } = shape;
-            return (<g transform={`rotate(${rotateDeg},${(center.x + translate.x) * scale.x},${(center.y + translate.y) * scale.y}) translate(${translate.x},${translate.y})`}>
-              {getShapePoints(lines).map((point, index) => {
+            return (<g key={JSON.stringify(shape)}>
+              {getShapePoints(shape).map((point, index) => {
                 return (
                   <circle
                     key={index}
@@ -158,9 +144,10 @@ function AnswerField(props) {
                     onClick={handleCircleClick}
                   />
                 );
-              })}
+              })
+              }
               {
-                // lines.map(line => {
+                // shap.map(line => {
                 //   const { point_1, point_2 } = line;
                 //   return <line x1={point_1.x} y1={point_1.y} x2={point_2.x} y2={point_2.y} stroke="blue" strokeWidth='3' />
                 // })

@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { lines, points } from "../../../utils/consts";
 import { Button, IconButton } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import RotateLeftIcon from "@material-ui/icons/RotateLeft";
-import RotateRightIcon from "@material-ui/icons/RotateRight";
 import ExamSteps from "../../../components/ExamSteps";
-import shapes from "../../../data/shapes.json";
 import questions from '../../../data/Questions.json'
-import ShapesInfo from "./ShapesInfo";
-import { adjustShapeToBoard, getShapePoints } from "../../../utils/boardUtils";
 import AnswerField from "./AnswerField";
 import QuestionInfo from "./QuestionInfo";
-
-const questionBranches = questions[1].branches;
+const QIndex = 0;
+const questionBranches = questions[QIndex].branches;
 
 function QuestionField() {
 
@@ -24,7 +18,7 @@ function QuestionField() {
   const isDone = (qq) => done.find(q => q === q);
 
   const nextShape = () => {
-    if (count + 1 === shapes.length - 1) {
+    if (count + 1 === questions[QIndex].branches.length - 1) {
       setCount(0);
     }
 
@@ -41,10 +35,6 @@ function QuestionField() {
     }
   }
 
-  useEffect(() => {
-    console.log(shapes[count]);
-    console.log(questionBranches);
-  }, [count])
 
   return (
     <div className="main-question-container">
@@ -52,8 +42,8 @@ function QuestionField() {
       <div className="question-section">
         <div className="question-timer">
           <div className="question">
-            <QuestionInfo question={questions[1].question} infoType='line' />
-            <QuestionInfo question={questions[1].question} />
+            <QuestionInfo question={questions[QIndex].question} infoType='line' />
+            <QuestionInfo question={questions[QIndex].question} />
           </div>
         </div>
         <div className="answer-section">
@@ -66,9 +56,6 @@ function QuestionField() {
           </IconButton>
           <AnswerField
             className={["svg-draw-container", "shapes solution"]}
-            shape={
-              shapes[count]
-            }
             branch={questionBranches[count]}
 
           />
