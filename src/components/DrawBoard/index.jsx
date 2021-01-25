@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback, useContext } from "react";
 import { Line } from "../Graph";
-import { adjustShapeToBoard, shapeCenter, shapeContainerParams, calcTowVectorsDeg } from '../../../src/utils/boardUtils'
+import { adjustShapeToBoard, shapeCenter, shapeContainerParams, calcTowVectorsDeg, applyRotate, applyTranslate } from '../../../src/utils/boardUtils'
 import "./style.css";
 
 function distance(p1, p2) {
@@ -475,14 +475,25 @@ const ExamShapesBoard = React.memo((props) => {
     const myStorage = window.localStorage;
     const normalizedShapes = shapes.map(shape => {
       let { lines, center, rotateDeg, translate, scale } = shape;
-      // normalizing the lines the center an the translate
+      const actualCenter = { x: (center.x + translate.x) * scale.x, y: (center.y + translate.y) * scale.y }
+
       lines = [...lines].map(line => {
+        /// apply the rotate and translate on each line's point
+        let { point_1, point_2 } = line;
+        console.log({ point_1, point_2 });
+        point_1 = applyTranslate(point_1, translate);
+        point_2 = applyTranslate(point_2, translate);
+        point_1 = applyRotate(point_1, rotateDeg, actualCenter);
+        point_2 = applyRotate(point_2, rotateDeg, actualCenter);
+        console.log("rotate >> ", rotateDeg);
+        console.log({ point_1, point_2 });
+        return { point_1, point_2 }
+
+      }).map(line => {
         const [point_1, point_2] = [normalizePoint(line.point_1, paperSize), normalizePoint(line.point_2, paperSize)];
         return { point_1, point_2 };
       });
-      center = normalizePoint(center, paperSize);
-      translate = normalizePoint(translate, paperSize);
-      return { lines, center, rotateDeg, translate, scale };
+      return lines
     })
 
     let exercise = myStorage.getItem('exercise');

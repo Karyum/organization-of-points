@@ -91,12 +91,23 @@ export function calcTowVectorsDeg(v1, v2) {
 
 export function reScaledShapes(shapes, boardSize) {
   const rescaledShapes = shapes.map((shape) => {
-    let { lines, center, translate, scale, rotateDeg } = shape;
-    lines = adjustShapeToBoard(lines, boardSize);
-    center = scalePoint(center, boardSize);
-    translate = scalePoint(translate, boardSize);
-    return { lines, center, translate, scale, rotateDeg };
+    return adjustShapeToBoard(shape, boardSize);
   });
   return rescaledShapes;
 }
-// console.log(shapeCenter(shapes[1]));
+
+export function applyRotate(vector, rotateDeg, center) {
+  const { x, y } = applyTranslate(vector, { x: -center.x, y: -center.y });
+  const [sinDeg, cosDeg] = [
+    Math.sin(rotateDeg * (Math.PI / 180)),
+    Math.cos(rotateDeg * (Math.PI / 180)),
+  ];
+  const [a, b] = [x * cosDeg - y * sinDeg, x * sinDeg + y * cosDeg];
+  return applyTranslate({ x: a, y: b }, center);
+}
+
+export function applyTranslate(vector, translate) {
+  return { x: vector.x + translate.x, y: vector.y + translate.y };
+}
+
+export function applyScale(vector) {}
