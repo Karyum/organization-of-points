@@ -5,10 +5,12 @@ import Graph from "./Graph";
 import "./style.css";
 import QuestionField from "../screens/TestScreen/components/QuestionField";
 import Result from "../screens/TestScreen/components/Result";
-import shapes from "../../src/data/shapes.json";
+import shapes from "../data/shapes.json";
+import questions from "../data/Questions.json";
 export default function AppTest() {
   useEffect(() => {
     window.localStorage.setItem("shapes", JSON.stringify(shapes));
+    window.localStorage.setItem("questions", JSON.stringify(questions));
   }, []);
   return (
     <QuestionField />

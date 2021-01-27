@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const steps = [
-  { id: 1, text: "Exam 1", step: "Step 1" },
+  { id: 1, text: "Exam 1", step: "Question 1" },
   { id: 2, text: "Exam 2", step: "Step 2" },
   { id: 3, text: "Exam 3", step: "Step 3" },
   { id: 4, text: "Exam 4", step: "Step 4" },
@@ -108,19 +108,19 @@ export default function ExamSteps() {
             </Button>
           </div>
         ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
             <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
+              <Typography className={classes.instructions}>
+                {getStepContent(activeStep)}
+              </Typography>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
               </Button>
-              {/* <Button
+                {/* <Button
                 variant="contained"
                 color="primary"
                 onClick={handleNext}
@@ -128,9 +128,9 @@ export default function ExamSteps() {
               >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button> */}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );
