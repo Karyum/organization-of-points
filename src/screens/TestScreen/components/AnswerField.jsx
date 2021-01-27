@@ -1,10 +1,11 @@
-import React, { useRef, useState, useEffect, memo } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { Button, IconButton } from "@material-ui/core";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import { getShapePoints, reScaledShapes } from "../../../utils/boardUtils"
+import { ExamAnswersContext } from './context'
 import "../style.css";
 
 function AnswerField(props) {
@@ -24,15 +25,44 @@ function AnswerField(props) {
 
   const [branchShapes, setBranchShapes] = useState([]);
 
+  const { answers, setAnswers, currentQuestion } = useContext(ExamAnswersContext);
+
+  useEffect(() => {
+    setAnswers(prev => {
+      prev[currentQuestion][props.branchId].lines = lines;
+      return [...prev];
+    });
+    return () => {
+      setLines(answers[currentQuestion][props.branchId].lines);
+    }
+  }, [props.branchId, currentQuestion])
+
+
+  useEffect(() => {
+    console.log(answers);
+    console.log(lines);
+  }, [])
+
+
+
   useEffect(() => {
     setBranchShapes(prev => {
       return reScaledShapes(props.branch, svgSize);
     })
+    // setLines([]);
   }, [props.branch, svgSize])
 
   useEffect(() => {
     setSvgSize(svgRef.current.clientHeight);
   }, []);
+
+  // useEffect(() => {
+  //   setAnswers(prev => {
+  //     const currentBranch = prev[currentQuestion][props.branchId];
+  //     currentBranch.lines = lines;
+  //     return [...prev];
+  //   })
+  // }, [lines]);
 
 
 
@@ -181,9 +211,6 @@ function AnswerField(props) {
         <IconButton aria-label="add" name="add" onClick={handleAction}>
           <LinearScaleIcon style={{ fontSize: 40 }} />
         </IconButton>
-        <Button color="primary" >
-          FINISH
-        </Button>
       </div>
     </div>
   );

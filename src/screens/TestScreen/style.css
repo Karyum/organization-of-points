@@ -37,9 +37,9 @@
   display: flex;
   width: 78%;
   /* height: 100%; */
-  background: #f1f7ff;
+  background: #f1f1f1;
   border-radius: 10px;
-  border: 1px solid #bc6c25;
+  /* border: 1px solid #bc6c25; */
   /* justify-content: space-around; */
   flex-direction: column;
   margin-top: 20px;
