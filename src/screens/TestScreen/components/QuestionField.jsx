@@ -24,18 +24,17 @@ function QuestionField() {
       return question.branches.map(branch => {
         return {
           lines: [],
-          numberOfDeletions: 0,
-          numberOfRotations: 0,
+          history: {
+            numberOfDeletions: 0,
+            numberOfRightRotations: 0,
+            numberOfLeftRotations: 0,
+          },
           boardSize: 0
         }
 
       })
     }))
   }, [questions]);
-
-  useEffect(() => {
-    console.log(answers);
-  }, [answers])
 
   if (currentQuestion === -1 || !answers.length) {
     return <div>Loading ...</div>

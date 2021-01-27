@@ -12,9 +12,14 @@ function AnswerField(props) {
 
   const svgRef = useRef();
   //states
-  const [svgSize, setSvgSize] = useState(1);
+  const [boardSize, setSvgSize] = useState(1);
   const [rotateAngle, setRotateAngle] = useState(0);
   const [lines, setLines] = useState([]);
+  const [history, setHistory] = useState({
+    numberOfDeletions: 0,
+    numberOfRightRotations: 0,
+    numberOfLeftRotations: 0,
+  });
   const [currentLine, setCurrentLine] = useState({
     point1: null,
     point2: null,
@@ -27,44 +32,32 @@ function AnswerField(props) {
 
   const { answers, setAnswers, currentQuestion } = useContext(ExamAnswersContext);
 
+
   useEffect(() => {
     setAnswers(prev => {
-      prev[currentQuestion][props.branchId].lines = lines;
+      prev[currentQuestion][props.prevBranch].lines = lines;
+      prev[currentQuestion][props.prevBranch].history = history;
+      prev[currentQuestion][props.prevBranch].boardSize = boardSize;
       return [...prev];
     });
     return () => {
-      setLines(answers[currentQuestion][props.branchId].lines);
+      const { lines, history, boardSize } = answers[currentQuestion][props.prevBranch];
+      setLines(lines);
+      setHistory(history);
     }
+
   }, [props.branchId, currentQuestion])
 
 
   useEffect(() => {
-    console.log(answers);
-    console.log(lines);
-  }, [])
-
-
-
-  useEffect(() => {
     setBranchShapes(prev => {
-      return reScaledShapes(props.branch, svgSize);
+      return reScaledShapes(props.branch, boardSize);
     })
-    // setLines([]);
-  }, [props.branch, svgSize])
+  }, [props.branch, boardSize])
 
   useEffect(() => {
     setSvgSize(svgRef.current.clientHeight);
   }, []);
-
-  // useEffect(() => {
-  //   setAnswers(prev => {
-  //     const currentBranch = prev[currentQuestion][props.branchId];
-  //     currentBranch.lines = lines;
-  //     return [...prev];
-  //   })
-  // }, [lines]);
-
-
 
   useEffect(() => {
 
@@ -92,19 +85,21 @@ function AnswerField(props) {
 
   // handlers
   const handleLineClick = (event) => {
-
     if (action === "delete") {
-
       const index = event.target.dataset.index;
       setLines((prev) => {
         prev[index] = "deleted";
         return prev.filter((line) => line !== "deleted");
       });
+      setHistory(prev => {
+        let { numberOfDeletions } = prev;
+        numberOfDeletions++;
+        return { ...prev, numberOfDeletions }
+      })
     }
   };
 
   const handleAction = (event) => {
-
     setAction(event.target.name);
   };
 
@@ -122,16 +117,24 @@ function AnswerField(props) {
         return { ...prev, point2: point };
       });
     }
-
-    console.log(point);
   };
 
   const handleLeftRotate = (event) => {
     setRotateAngle((prevangle) => prevangle - 10);
+    setHistory(prev => {
+      let { numberOfLeftRotations } = prev;
+      numberOfLeftRotations++;
+      return { ...prev, numberOfLeftRotations };
+    })
   };
 
   const handleRightRotate = (event) => {
     setRotateAngle((prevangle) => prevangle + 10);
+    setHistory(prev => {
+      let { numberOfRightRotations } = prev;
+      numberOfRightRotations++;
+      return { ...prev, numberOfRightRotations };
+    })
   };
   return (
     <div className="answer-board-tools">

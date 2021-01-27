@@ -6,17 +6,18 @@ import AnswerField from "./AnswerField";
 import "../style.css";
 function QuestionBranches(props) {
   const [count, setCount] = useState(0);
+  const [prevCount, setPrevCount] = useState(0)
 
   const nextShape = () => {
     if (count !== props.branches.length - 1) {
+      setPrevCount(count);
       setCount((prev) => prev + 1);
     }
   };
 
   const prevShape = () => {
-    if (count === 0) {
-      setCount(0);
-    } else {
+    if (count !== 0) {
+      setPrevCount(count);
       setCount((prev) => prev - 1);
     }
   };
@@ -32,7 +33,7 @@ function QuestionBranches(props) {
       <AnswerField
         className={["svg-draw-container", "shapes solution"]}
         branch={props.branches[count]}
-        branchId={count}
+        prevBranch={prevCount}
       />
 
       <IconButton
