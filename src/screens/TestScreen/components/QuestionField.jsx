@@ -14,7 +14,8 @@ function QuestionField() {
 
 
   useEffect(() => {
-    setQuestions(JSON.parse(window.localStorage.getItem('questions')))
+    const questions = JSON.parse(window.localStorage.getItem('questions'))
+    setQuestions(questions)
     setCurrentQuestion(0);
   }, [])
 
@@ -24,18 +25,21 @@ function QuestionField() {
       return question.branches.map(branch => {
         return {
           lines: [],
-          numberOfDeletions: 0,
-          numberOfRotations: 0,
+          history: {
+            numberOfDeletions: 0,
+            numberOfRightRotations: 0,
+            numberOfLeftRotations: 0,
+          },
           boardSize: 0
         }
 
       })
     }))
-  }, [questions]);
+  }, [currentQuestion]);
 
   useEffect(() => {
-    console.log(answers);
-  }, [answers])
+    console.log("Answers...", answers);
+  }, [answers]);
 
   if (currentQuestion === -1 || !answers.length) {
     return <div>Loading ...</div>

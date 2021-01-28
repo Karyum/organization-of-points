@@ -1,6 +1,6 @@
 .draw-board {
-  width: 304px;
-  height: 304px;
+  width: 404px;
+  height: 404px;
   border: 2px solid black;
   box-sizing: border-box;
 }
@@ -72,4 +72,11 @@
 
 .resizable {
   cursor: url("../../img-icons/resize.png"), auto;
+}
+
+.painter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
 }
