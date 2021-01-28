@@ -1,18 +1,13 @@
 import React, { useRef, useState, useEffect, useCallback, useContext } from "react";
 import { Line } from "../Graph";
-import { adjustShapeToBoard, shapeCenter, shapeContainerParams, calcTowVectorsDeg, applyRotate, applyTranslate } from '../../../src/utils/boardUtils'
+import { adjustShapeToBoard, shapeCenter, shapeContainerParams, calcTowVectorsDeg, applyRotate, applyTranslate, normalizePoint } from '../../../src/utils/boardUtils'
 import "./style.css";
 
 function distance(p1, p2) {
   return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 }
 
-function normalizePoint(point, factor) {
-  const { x, y } = point;
-  if (factor != 0) {
-    return { x: x / factor, y: y / factor }
-  }
-}
+
 
 function useSvgMousePosition(svgRef) {
   useEffect(() => {

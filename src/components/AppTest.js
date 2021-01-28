@@ -6,16 +6,17 @@ import DrawBoard, { ExerciseWriter } from "./DrawBoard";
 import "./style.css";
 import QuestionField from "../screens/TestScreen/components/QuestionField";
 import Result from "../screens/TestScreen/components/Result";
+import Guide from "../screens/GuideScreen/index ";
 import shapes from "../data/shapes.json";
 import questions from "../data/Questions.json";
-import sampleQuestions from "../data/sample-Question.json";
+import sampleQuestion from "../data/sample-Question.json";
 export default function AppTest() {
   useEffect(() => {
     window.localStorage.setItem("shapes", JSON.stringify(shapes));
     window.localStorage.setItem("questions", JSON.stringify(questions));
     window.localStorage.setItem(
       "sample-question",
-      JSON.stringify(sampleQuestions)
+      JSON.stringify(sampleQuestion)
     );
   }, []);
   return (
@@ -23,6 +24,7 @@ export default function AppTest() {
       <AppHeader />
       <Switch>
         <Route exact path="/" component={QuestionField} />
+        <Route exact path="/guide" component={Guide} />
         <Route exact path="/admin-draw" component={DrawBoard} />
         <Route exact path="/admin-exercise" component={ExerciseWriter} />
       </Switch>

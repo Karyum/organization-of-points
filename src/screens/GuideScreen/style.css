@@ -1,0 +1,22 @@
+.guide-main-container {
+  width: 90vw;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: #f1f1f1;
+  border-radius: 20px;
+  margin: 10vh auto 0px auto;
+}
+.guide-main-container h2 {
+  color: blue;
+  align-self: flex-start;
+  margin-left: 20px;
+}
+.guide-branches {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}

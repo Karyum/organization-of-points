@@ -3,6 +3,7 @@ import ExamSteps from "../../../components/ExamSteps";
 import QuestionBranches from './QuestionBranches'
 import QuestionInfo from "./QuestionInfo";
 import { ExamAnswersContext } from './context';
+import { normalizePoint } from '../../../utils/boardUtils'
 
 function QuestionField() {
 
@@ -37,9 +38,21 @@ function QuestionField() {
     }))
   }, [currentQuestion]);
 
-  useEffect(() => {
-    console.log("Answers...", answers);
-  }, [answers]);
+
+  // const handleSubmit = (event) => {
+  //   console.log(answers);
+  //   window.localStorage.setItem('sample-answers', JSON.stringify(answers.map(answer => {
+  //     return answer.map(branchAnswers => {
+  //       console.log(branchAnswers);
+  //       const { lines, boardSize } = branchAnswers;
+  //       const normalizedLines = [...lines].map(line => {
+  //         const [point_1, point_2] = [normalizePoint(line.point_1, boardSize), normalizePoint(line.point_2, boardSize)];
+  //         return { point_1, point_2 };
+  //       })
+  //       return { lines: normalizedLines };
+  //     })
+  //   })))
+  // }
 
   if (currentQuestion === -1 || !answers.length) {
     return <div>Loading ...</div>
@@ -48,6 +61,7 @@ function QuestionField() {
   return (
     <ExamAnswersContext.Provider value={{ answers, setAnswers, currentQuestion }}>
       <div className="main-question-container">
+        {/* <button onClick={handleSubmit}>Submit</button> */}
         <ExamSteps />
         <div className="question-section">
           <div className="question-timer">

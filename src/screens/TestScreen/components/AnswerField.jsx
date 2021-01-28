@@ -21,8 +21,8 @@ function AnswerField(props) {
     numberOfLeftRotations: 0,
   });
   const [currentLine, setCurrentLine] = useState({
-    point1: null,
-    point2: null,
+    point_1: null,
+    point_2: null,
   });
   const [action, setAction] = useState("add");
 
@@ -41,7 +41,7 @@ function AnswerField(props) {
       return [...prev];
     });
     {
-      const { lines, history, boardSize } = answers[currentQuestion][props.branchId];
+      const { lines, history } = answers[currentQuestion][props.branchId];
       setLines(lines);
       setHistory(history);
     }
@@ -61,10 +61,10 @@ function AnswerField(props) {
 
   useEffect(() => {
 
-    if (currentLine.point1 && currentLine.point2) {
+    if (currentLine.point_1 && currentLine.point_2) {
       const reversedLine = {
-        point1: currentLine.point2,
-        point2: currentLine.point1,
+        point_1: currentLine.point_2,
+        point_2: currentLine.point_1,
       };
       if (
         !lines
@@ -79,7 +79,7 @@ function AnswerField(props) {
         });
       }
 
-      setCurrentLine({ point1: null, point2: null });
+      setCurrentLine({ point_1: null, point_2: null });
     }
   }, [currentLine]);
 
@@ -108,13 +108,13 @@ function AnswerField(props) {
       x: event.target.getAttribute("cx"),
       y: event.target.getAttribute("cy"),
     };
-    if (currentLine.point1 === null) {
-      setCurrentLine({ point1: point, point2: null });
+    if (currentLine.point_1 === null) {
+      setCurrentLine({ point_1: point, point_2: null });
       return;
     }
-    if (JSON.stringify(currentLine.point1) !== JSON.stringify(point)) {
+    if (JSON.stringify(currentLine.point_1) !== JSON.stringify(point)) {
       setCurrentLine((prev) => {
-        return { ...prev, point2: point };
+        return { ...prev, point_2: point };
       });
     }
   };
@@ -143,17 +143,17 @@ function AnswerField(props) {
           ref={svgRef}
           className={`${props.className[1] ? props.className[1] : "question-branch-paper"
             } add-cursor`}
-          transform={`rotate(${rotateAngle},0,0)`}
+          transform={`rotate(${10 * (history.numberOfRightRotations - history.numberOfLeftRotations)},0,0)`}
         >
           <g>
             {lines.map((l, index) => {
               return (
                 <line
                   key={JSON.stringify(l) + index}
-                  x1={l.point1.x}
-                  y1={l.point1.y}
-                  x2={l.point2.x}
-                  y2={l.point2.y}
+                  x1={l.point_1.x}
+                  y1={l.point_1.y}
+                  x2={l.point_2.x}
+                  y2={l.point_2.y}
                   strokeWidth="3"
                   stroke="green"
                   data-index={index}
