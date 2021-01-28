@@ -40,8 +40,8 @@ function AnswerField(props) {
       prev[currentQuestion][props.prevBranch].boardSize = boardSize;
       return [...prev];
     });
-    return () => {
-      const { lines, history, boardSize } = answers[currentQuestion][props.prevBranch];
+    {
+      const { lines, history, boardSize } = answers[currentQuestion][props.branchId];
       setLines(lines);
       setHistory(history);
     }

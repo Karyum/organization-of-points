@@ -14,7 +14,8 @@ function QuestionField() {
 
 
   useEffect(() => {
-    setQuestions(JSON.parse(window.localStorage.getItem('questions')))
+    const questions = JSON.parse(window.localStorage.getItem('questions'))
+    setQuestions(questions)
     setCurrentQuestion(0);
   }, [])
 
@@ -34,7 +35,11 @@ function QuestionField() {
 
       })
     }))
-  }, [questions]);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    console.log("Answers...", answers);
+  }, [answers]);
 
   if (currentQuestion === -1 || !answers.length) {
     return <div>Loading ...</div>

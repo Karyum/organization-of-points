@@ -33,6 +33,7 @@ function QuestionBranches(props) {
       <AnswerField
         className={["svg-draw-container", "shapes solution"]}
         branch={props.branches[count]}
+        branchId={count}
         prevBranch={prevCount}
       />
 
