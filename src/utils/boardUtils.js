@@ -1,5 +1,10 @@
 // const shapes = require("../data/shapes.json");
-
+export function normalizePoint(point, factor) {
+  const { x, y } = point;
+  if (factor != 0) {
+    return { x: x / factor, y: y / factor };
+  }
+}
 export function scalePoint(point, factor) {
   const { x, y } = point;
   return { x: x * factor, y: y * factor };
