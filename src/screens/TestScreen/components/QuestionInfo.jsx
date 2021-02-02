@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { reScaledShapes } from '../../../utils/boardUtils'
+import { reScaledShapes, adjustShapeToBoard } from '../../../utils/boardUtils'
 import ShapesInfo from './ShapesInfo';
 function useBoard(props) {
     const boardRef = useRef();
@@ -13,6 +13,17 @@ function QuestionInfo(props) {
 
     const [boardRef, boardSize] = useBoard();
     const [questionShapes, setQuestionShapes] = useState([]);
+    const [lines, setLines] = useState([]);
+
+    const componentMount = useRef(true);
+
+    useEffect(() => {
+        console.log("QuestionInfo mount...");
+        return () => {
+            console.log("QuestionInfo unmount...");
+            componentMount.current = false;
+        }
+    }, [])
 
     useEffect(() => {
         setQuestionShapes(prev => {
@@ -20,11 +31,37 @@ function QuestionInfo(props) {
         })
     }, [boardSize, props.question]);
 
+    useEffect(() => {
+        if (props.lines) {
+            setLines([]);
+            console.log(props.lines);
+            const adjustedLines = adjustShapeToBoard(props.lines, boardSize)
+            adjustedLines.forEach((line, index) => {
+                setTimeout(() => {
+                    if (componentMount) {
+                        console.log("line index...", index);
+                        setLines(prev => [...prev, line]);
+                        if (index === adjustedLines.length - 1) {
+                            props.Finish();
+                        }
+                    }
+                }, (index + 1) * 700)
+            })
+        }
+    }, [props.lines, boardSize, componentMount])
+
     return (
         <svg ref={boardRef} className={props.className ? props.className : "question-shapes shapes"}>
             {questionShapes.map(shape => {
                 return (<ShapesInfo key={JSON.stringify(shape)} shape={shape} infoType={props.infoType} />);
             })}
+            {lines.length !== 0 ?
+                lines.map((line, index) => {
+                    const { point_1, point_2 } = line;
+                    return (<line key={JSON.stringify(line) + index} x1={point_1.x} y1={point_1.y} x2={point_2.x} y2={point_2.y} stroke="blue" strokeWidth="2" />)
+                }) :
+                <g></g>
+            }
         </svg>
     )
 }
