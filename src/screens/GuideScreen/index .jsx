@@ -1,26 +1,41 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import './style.css'
 import { Button, IconButton } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles'
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import QuestionInfo from "../../screens/TestScreen/components/QuestionInfo"
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+
+const useStyle = makeStyles((theme) => ({
+    playBtn: {
+        background: 'red',
+        alignSelf: 'flex-end',
+        margin: "0px 20px 20px 0px"
+    }
+}))
+
 function Guide() {
     const [sampleQuestion, setSampleQuestion] = useState(null);
     const [sampleBranches, setSampleBranches] = useState(null);
     const [branchCount, setBranchCount] = useState(0);
     const [pagenation, setPagenation] = useState(false);
     const [message, setMessage] = useState("");
+    const history = useHistory();
+
+    const classes = useStyle();
+
     useEffect(() => {
         const sample = JSON.parse(window.localStorage.getItem('sample-question'));
         setSampleQuestion(sample.question);
         setSampleBranches(sample.branches);
     }, [])
+
     useEffect(() => {
         console.log(sampleBranches);
     }, [sampleBranches])
-    if (!sampleBranches || !sampleQuestion) {
-        return <div className="guide-main-container">Loading....</div>
-    }
+
 
     const handleNext = (event) => {
         if (branchCount < sampleBranches.length - 1 && pagenation) {
@@ -42,9 +57,14 @@ function Guide() {
         setMessage(sampleBranches[branchCount].text);
         setPagenation(true);
     }
-    // -map the sample branches to the message and Question info
-    // -update QuestionInfo with a new infoType "autocomplete" that given shapes and lines will display the shapes vertices and the line , see sample-Question file for more information about the branches
-    // - make a count state that will control the displayed branch
+
+    const handleStart = (event) => {
+        history.push('exercises')
+    }
+
+    if (!sampleBranches || !sampleQuestion) {
+        return <div className="guide-main-container">Loading....</div>
+    }
 
     return (
         <div className="guide-main-container">
@@ -68,8 +88,25 @@ function Guide() {
                 </IconButton>
             </div>
             <h4>{message}</h4>
+            {
+                branchCount === sampleBranches.length - 1 ?
+                    (<Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        className={classes.playBtn}
+                        startIcon={<PlayCircleOutlineIcon />}
+                        onClick={handleStart}
+                    >
+                        Play
+                    </Button>) :
+                    <div></div>
+            }
+
         </div>
     )
 }
 
 export default Guide
+
+
