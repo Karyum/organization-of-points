@@ -23,8 +23,8 @@ export default function AppTest() {
     <Router>
       <AppHeader />
       <Switch>
-        <Route exact path="/" component={QuestionField} />
-        <Route exact path="/guide" component={Guide} />
+        <Route exact path="/exercises" component={QuestionField} />
+        <Route exact path="/" component={Guide} />
         <Route exact path="/admin-draw" component={DrawBoard} />
         <Route exact path="/admin-exercise" component={ExerciseWriter} />
       </Switch>
