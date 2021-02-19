@@ -4,12 +4,10 @@ import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
-import { getShapePoints, reScaledShapes } from "../../../utils/boardUtils"
-import { ExamAnswersContext } from './context'
-import "../style.css";
+import { getShapePoints, reScaledShapes } from "../../../../utils/boardUtils";
+import TestAnswersContext from "../../context";
 
-function AnswerField(props) {
-
+export default (props) => {
   const svgRef = useRef();
   //states
   const [boardSize, setSvgSize] = useState(1);
@@ -20,52 +18,53 @@ function AnswerField(props) {
     numberOfRightRotations: 0,
     numberOfLeftRotations: 0,
   });
+
   const [currentLine, setCurrentLine] = useState({
     point_1: null,
     point_2: null,
   });
+
   const [action, setAction] = useState("add");
 
   /// connect the branch shapes given branch== array of shapes....
 
-  const [branchShapes, setBranchShapes] = useState([]);
+  const [shapes, setShapes] = useState([]);
 
-  const { answers, setAnswers, currentQuestion } = useContext(ExamAnswersContext);
-
+  const { answers, setAnswers, currentQuestion } = useContext(
+    TestAnswersContext
+  );
 
   useEffect(() => {
-    setAnswers(prev => {
-      prev[currentQuestion][props.prevBranch].lines = lines;
-      prev[currentQuestion][props.prevBranch].history = history;
-      prev[currentQuestion][props.prevBranch].boardSize = boardSize;
-      return [...prev];
+    setAnswers((prev) => {
+      const exercise = prev[currentQuestion][props.prevBranch];
+
+      exercise.lines = lines;
+      exercise.history = history;
+      exercise.boardSize = boardSize;
+
+      return prev;
     });
-    {
-      const { lines, history } = answers[currentQuestion][props.branchId];
-      setLines(lines);
-      setHistory(history);
-    }
 
-  }, [props.branchId, currentQuestion])
-
+    const { lines, history } = answers[currentQuestion][props.branchId];
+    setLines(lines);
+    setHistory(history);
+  }, [props.branchId, currentQuestion]);
 
   useEffect(() => {
-    setBranchShapes(prev => {
-      return reScaledShapes(props.branch, boardSize);
-    })
-  }, [props.branch, boardSize])
+    setShapes(reScaledShapes(props.branch, boardSize));
+  }, [props.branch, boardSize]);
 
   useEffect(() => {
     setSvgSize(svgRef.current.clientHeight);
   }, []);
 
   useEffect(() => {
-
     if (currentLine.point_1 && currentLine.point_2) {
       const reversedLine = {
         point_1: currentLine.point_2,
         point_2: currentLine.point_1,
       };
+
       if (
         !lines
           .map((line) => JSON.stringify(line))
@@ -91,11 +90,11 @@ function AnswerField(props) {
         prev[index] = "deleted";
         return prev.filter((line) => line !== "deleted");
       });
-      setHistory(prev => {
+      setHistory((prev) => {
         let { numberOfDeletions } = prev;
         numberOfDeletions++;
-        return { ...prev, numberOfDeletions }
-      })
+        return { ...prev, numberOfDeletions };
+      });
     }
   };
 
@@ -108,10 +107,12 @@ function AnswerField(props) {
       x: event.target.getAttribute("cx"),
       y: event.target.getAttribute("cy"),
     };
-    if (currentLine.point_1 === null) {
+
+    if (!currentLine.point_1) {
       setCurrentLine({ point_1: point, point_2: null });
       return;
     }
+
     if (JSON.stringify(currentLine.point_1) !== JSON.stringify(point)) {
       setCurrentLine((prev) => {
         return { ...prev, point_2: point };
@@ -121,31 +122,37 @@ function AnswerField(props) {
 
   const handleLeftRotate = (event) => {
     setRotateAngle((prevangle) => prevangle - 10);
-    setHistory(prev => {
+    setHistory((prev) => {
       let { numberOfLeftRotations } = prev;
       numberOfLeftRotations++;
       return { ...prev, numberOfLeftRotations };
-    })
+    });
   };
 
   const handleRightRotate = (event) => {
     setRotateAngle((prevangle) => prevangle + 10);
-    setHistory(prev => {
+    setHistory((prev) => {
       let { numberOfRightRotations } = prev;
       numberOfRightRotations++;
       return { ...prev, numberOfRightRotations };
-    })
+    });
   };
+
   return (
     <div className="answer-board-tools">
       <div className={props.className[0]}>
         <svg
           ref={svgRef}
-          className={`${props.className[1] ? props.className[1] : "question-branch-paper"
-            } add-cursor`}
-          transform={`rotate(${10 * (history.numberOfRightRotations - history.numberOfLeftRotations)},0,0)`}
+          className={`${
+            props.className[1] ? props.className[1] : "question-branch-paper"
+          } add-cursor`}
+          transform={`rotate(${
+            10 *
+            (history.numberOfRightRotations - history.numberOfLeftRotations)
+          },0,0)`}
         >
           <g>
+            {/* line are rendered here after someone clicked at least 2 dots */}
             {lines.map((l, index) => {
               return (
                 <line
@@ -157,38 +164,50 @@ function AnswerField(props) {
                   strokeWidth="3"
                   stroke="green"
                   data-index={index}
-                  className={`graph-line ${action === "delete" ? "delete-cursor" : "add-cursor"
-                    }`}
+                  className={`graph-line ${
+                    action === "delete" ? "delete-cursor" : "add-cursor"
+                  }`}
                   onClick={handleLineClick}
                 />
               );
             })}
           </g>
-          {branchShapes.map(shape => {
-            return (<g key={JSON.stringify(shape)}>
-              {getShapePoints(shape).map((point, index) => {
-                return (
-                  <circle
-                    key={index}
-                    cx={point.x}
-                    cy={point.y}
-                    r="5"
-                    fill="red"
-                    onClick={handleCircleClick}
-                  />
-                );
-              })
-              }
-              {
-                // shap.map(line => {
-                //   const { point_1, point_2 } = line;
-                //   return <line x1={point_1.x} y1={point_1.y} x2={point_2.x} y2={point_2.y} stroke="blue" strokeWidth='3' />
-                // })
-              }
-            </g>)
-          })
-          }
-
+          {/* refer to the shapes.json to see how this array looks like */}
+          {shapes.map((shape) => {
+            return (
+              <g key={JSON.stringify(shape)}>
+                {getShapePoints(shape).map((point, index) => {
+                  console.log(point, currentLine?.point_1);
+                  return (
+                    <circle
+                      key={index}
+                      cx={point.x}
+                      cy={point.y}
+                      r={
+                        point.x === +currentLine?.point_1?.x &&
+                        point.y === +currentLine?.point_1?.y
+                          ? "10"
+                          : "8"
+                      }
+                      fill={
+                        point.x === +currentLine?.point_1?.x &&
+                        point.y === +currentLine?.point_1?.y
+                          ? "blue"
+                          : "red"
+                      }
+                      onClick={handleCircleClick}
+                    />
+                  );
+                })}
+                {
+                  // shap.map(line => {
+                  //   const { point_1, point_2 } = line;
+                  //   return <line x1={point_1.x} y1={point_1.y} x2={point_2.x} y2={point_2.y} stroke="blue" strokeWidth='3' />
+                  // })
+                }
+              </g>
+            );
+          })}
         </svg>
       </div>
 
@@ -218,5 +237,3 @@ function AnswerField(props) {
     </div>
   );
 };
-
-export default AnswerField;

@@ -36,12 +36,7 @@ export function adjustShapeToBoard(shape, boardSize) {
  */
 
 export function getShapePoints(shape) {
-  const result = [];
-  shape.forEach((line) => {
-    const { point_1, point_2 } = line;
-    result.push(point_1, point_2);
-  });
-  return result;
+  return shape.reduce((acc, { point_1, point_2 }) => acc.concat([point_1, point_2]), [])
 }
 
 export function shapeCenter(shape) {
@@ -115,4 +110,4 @@ export function applyTranslate(vector, translate) {
   return { x: vector.x + translate.x, y: vector.y + translate.y };
 }
 
-export function applyScale(vector) {}
+export function applyScale(vector) { }

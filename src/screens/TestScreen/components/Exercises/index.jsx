@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button, IconButton } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import AnswerField from "./AnswerField";
-import "../style.css";
-function QuestionBranches(props) {
+import Exercise from "../Exercise";
+
+function Exercises(props) {
   const [count, setCount] = useState(0);
-  const [prevCount, setPrevCount] = useState(0)
+  const [prevCount, setPrevCount] = useState(0);
 
   const nextShape = () => {
     if (count !== props.branches.length - 1) {
@@ -21,8 +21,9 @@ function QuestionBranches(props) {
       setCount((prev) => prev - 1);
     }
   };
+
   return (
-    <div className="answer-section">
+    <div className="exercise-section">
       <IconButton
         aria-label="previous"
         style={{ dropShadow: "1px 3px 19px #9e9e9e" }}
@@ -30,7 +31,7 @@ function QuestionBranches(props) {
       >
         <ChevronLeftIcon style={{ fontSize: 40 }} />
       </IconButton>
-      <AnswerField
+      <Exercise
         className={["svg-draw-container", "shapes solution"]}
         branch={props.branches[count]}
         branchId={count}
@@ -48,4 +49,4 @@ function QuestionBranches(props) {
   );
 }
 
-export default QuestionBranches;
+export default Exercises;
